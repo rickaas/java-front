@@ -1,15 +1,134 @@
 module auto-java-front
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 imports
   libstratego-lib
   libstratego-xtc
 
-strategies
 
+strategies
   main-auto-java-front =
-      install-java-front-m4
-    ; <exit> 0
+    s-enter(
+    | "strategoxt/syntax/java-front/tools/auto-java-front.str"
+    , "main-auto-java-front"
+    , "8"
+    , "2"
+    , "10"
+    , "13"
+    )
+    ; s-step(
+      | "strategoxt/syntax/java-front/tools/auto-java-front.str"
+      , "9"
+      , "6"
+      , "10"
+      , "13"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/java-front/tools/auto-java-front.str"
+       , "9"
+       , "6"
+       , "9"
+       , "26"
+       )
+       ; install-java-front-m4)
+    ; s-step(
+      | "strategoxt/syntax/java-front/tools/auto-java-front.str"
+      , "10"
+      , "6"
+      , "10"
+      , "13"
+      )
+    ; <(s-step(
+        | "strategoxt/syntax/java-front/tools/auto-java-front.str"
+        , "10"
+        , "7"
+        , "10"
+        , "10"
+        )
+        ; exit)> 0
+    < s-exit(
+      | "strategoxt/syntax/java-front/tools/auto-java-front.str"
+      , "main-auto-java-front"
+      , "8"
+      , "2"
+      , "10"
+      , "13"
+      )
+    + s-exit(
+      | "strategoxt/syntax/java-front/tools/auto-java-front.str"
+      , "main-auto-java-front"
+      , "8"
+      , "2"
+      , "10"
+      , "13"
+      )
+      ; fail
 
   install-java-front-m4 =
-      <xtc-find-file> "java-front.m4"
-    ; copy-to(!"java-front.m4")
-
+    s-enter(
+    | "strategoxt/syntax/java-front/tools/auto-java-front.str"
+    , "install-java-front-m4"
+    , "12"
+    , "2"
+    , "14"
+    , "30"
+    )
+    ; s-step(
+      | "strategoxt/syntax/java-front/tools/auto-java-front.str"
+      , "13"
+      , "6"
+      , "14"
+      , "30"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/java-front/tools/auto-java-front.str"
+       , "13"
+       , "6"
+       , "13"
+       , "36"
+       )
+       ; <(s-step(
+           | "strategoxt/syntax/java-front/tools/auto-java-front.str"
+           , "13"
+           , "7"
+           , "13"
+           , "19"
+           )
+           ; xtc-find-file)> "java-front.m4")
+    ; s-step(
+      | "strategoxt/syntax/java-front/tools/auto-java-front.str"
+      , "14"
+      , "6"
+      , "14"
+      , "30"
+      )
+    ; copy-to(
+        s-step(
+        | "strategoxt/syntax/java-front/tools/auto-java-front.str"
+        , "14"
+        , "14"
+        , "14"
+        , "29"
+        )
+        ; !"java-front.m4"
+      )
+    < s-exit(
+      | "strategoxt/syntax/java-front/tools/auto-java-front.str"
+      , "install-java-front-m4"
+      , "12"
+      , "2"
+      , "14"
+      , "30"
+      )
+    + s-exit(
+      | "strategoxt/syntax/java-front/tools/auto-java-front.str"
+      , "install-java-front-m4"
+      , "12"
+      , "2"
+      , "14"
+      , "30"
+      )
+      ; fail

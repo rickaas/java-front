@@ -1,49 +1,457 @@
 module java/postprocess/java-concat-ids
 
-imports 
-  libstratego-lib  
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
 
-signature constructors
-  ConcatIds : ID -> ID
+
+imports
+  libstratego-lib
+
+
+signature
+  constructors
+    ConcatIds : ID -> ID
+
 
 strategies
-
   java-concat-ids =
-    bottomup(try(
-       concat-id-java-pascal-case
-    <+ concat-id-underscore-camel-case
-    <+ concat-id-camel-case
-    ))
+    s-enter(
+    | "strategoxt/syntax/java-front/lib/java/postprocess/java-concat-ids.str"
+    , "java-concat-ids"
+    , "11"
+    , "2"
+    , "16"
+    , "5"
+    )
+    ; s-step(
+      | "strategoxt/syntax/java-front/lib/java/postprocess/java-concat-ids.str"
+      , "12"
+      , "4"
+      , "16"
+      , "5"
+      )
+    ; bottomup(
+        s-step(
+        | "strategoxt/syntax/java-front/lib/java/postprocess/java-concat-ids.str"
+        , "12"
+        , "13"
+        , "16"
+        , "4"
+        )
+        ; try(
+            s-step(
+            | "strategoxt/syntax/java-front/lib/java/postprocess/java-concat-ids.str"
+            , "13"
+            , "7"
+            , "15"
+            , "26"
+            )
+            ; (s-step(
+               | "strategoxt/syntax/java-front/lib/java/postprocess/java-concat-ids.str"
+               , "13"
+               , "7"
+               , "13"
+               , "32"
+               )
+               ; concat-id-java-pascal-case
+               <+ s-step(
+                  | "strategoxt/syntax/java-front/lib/java/postprocess/java-concat-ids.str"
+                  , "14"
+                  , "7"
+                  , "15"
+                  , "26"
+                  )
+                  ; (s-step(
+                     | "strategoxt/syntax/java-front/lib/java/postprocess/java-concat-ids.str"
+                     , "14"
+                     , "7"
+                     , "14"
+                     , "37"
+                     )
+                     ; concat-id-underscore-camel-case
+                     <+ s-step(
+                        | "strategoxt/syntax/java-front/lib/java/postprocess/java-concat-ids.str"
+                        , "15"
+                        , "7"
+                        , "15"
+                        , "26"
+                        )
+                        ; concat-id-camel-case))
+          )
+      )
+    < s-exit(
+      | "strategoxt/syntax/java-front/lib/java/postprocess/java-concat-ids.str"
+      , "java-concat-ids"
+      , "11"
+      , "2"
+      , "16"
+      , "5"
+      )
+    + s-exit(
+      | "strategoxt/syntax/java-front/lib/java/postprocess/java-concat-ids.str"
+      , "java-concat-ids"
+      , "11"
+      , "2"
+      , "16"
+      , "5"
+      )
+      ; fail
 
-/** @internal */
+
 rules
 
   concat-id-java-pascal-case :
-    ClassDecHead(p1, Id(p2), p3, p4, p5) -> ClassDecHead(p1, Id(<concat-id-pascal-case> p2), p3, p4, p5)
+    ClassDecHead(
+      p1
+    , Id(p2)
+    , p3
+    , p4
+    , p5
+    ) -> <r-exit(
+          | "strategoxt/syntax/java-front/lib/java/postprocess/java-concat-ids.str"
+          , "concat-id-java-pascal-case"
+          , "21"
+          , "2"
+          , "22"
+          , "103"
+          )> ClassDecHead(
+               p1
+             , Id(
+                 <s-step(
+                  | "strategoxt/syntax/java-front/lib/java/postprocess/java-concat-ids.str"
+                  , "22"
+                  , "65"
+                  , "22"
+                  , "85"
+                  )
+                  ; concat-id-pascal-case> p2
+               )
+             , p3
+             , p4
+             , p5
+             )
+    where r-enter(|"strategoxt/syntax/java-front/lib/java/postprocess/java-concat-ids.str", "concat-id-java-pascal-case", "21,2,22,103")
+          <+ r-exit(
+             | "strategoxt/syntax/java-front/lib/java/postprocess/java-concat-ids.str"
+             , "concat-id-java-pascal-case"
+             , "21"
+             , "2"
+             , "22"
+             , "103"
+             )
+             ; fail
 
   concat-id-java-pascal-case :
-    TypeName(p1, p2) -> TypeName(p1, <alltd(concat-id-pascal-case)> p2)
+    TypeName(p1, p2) -> <r-exit(
+                         | "strategoxt/syntax/java-front/lib/java/postprocess/java-concat-ids.str"
+                         , "concat-id-java-pascal-case"
+                         , "24"
+                         , "2"
+                         , "25"
+                         , "70"
+                         )> TypeName(
+                              p1
+                            , <s-step(
+                               | "strategoxt/syntax/java-front/lib/java/postprocess/java-concat-ids.str"
+                               , "25"
+                               , "38"
+                               , "25"
+                               , "65"
+                               )
+                               ; alltd(
+                                   s-step(
+                                   | "strategoxt/syntax/java-front/lib/java/postprocess/java-concat-ids.str"
+                                   , "25"
+                                   , "44"
+                                   , "25"
+                                   , "64"
+                                   )
+                                   ; concat-id-pascal-case
+                                 )> p2
+                            )
+    where r-enter(|"strategoxt/syntax/java-front/lib/java/postprocess/java-concat-ids.str", "concat-id-java-pascal-case", "24,2,25,70")
+          <+ r-exit(
+             | "strategoxt/syntax/java-front/lib/java/postprocess/java-concat-ids.str"
+             , "concat-id-java-pascal-case"
+             , "24"
+             , "2"
+             , "25"
+             , "70"
+             )
+             ; fail
 
   concat-id-java-pascal-case :
-    TypeName(p1) -> TypeName(<alltd(concat-id-pascal-case)> p1)
-    
-  // PascalCase
-  concat-id-pascal-case:
-    ConcatIds(xs) -> <concat-strings> xs'
-    where
-      xs' := <map(give-capital)> xs
-  
-  // _camelCase
-  concat-id-underscore-camel-case:
-    ConcatIds(["_", x | xs]) -> <concat-strings> ["_", x | xs']
-    where
-      xs' := <map(give-capital)> xs
-  
-  // camelCase
-  concat-id-camel-case:
-    ConcatIds([x | xs]) -> <concat-strings> [x | xs']
-    where
-      xs' := <map(give-capital)> xs
-  
+    TypeName(p1) -> <r-exit(
+                     | "strategoxt/syntax/java-front/lib/java/postprocess/java-concat-ids.str"
+                     , "concat-id-java-pascal-case"
+                     , "27"
+                     , "2"
+                     , "28"
+                     , "62"
+                     )> TypeName(
+                          <s-step(
+                           | "strategoxt/syntax/java-front/lib/java/postprocess/java-concat-ids.str"
+                           , "28"
+                           , "30"
+                           , "28"
+                           , "57"
+                           )
+                           ; alltd(
+                               s-step(
+                               | "strategoxt/syntax/java-front/lib/java/postprocess/java-concat-ids.str"
+                               , "28"
+                               , "36"
+                               , "28"
+                               , "56"
+                               )
+                               ; concat-id-pascal-case
+                             )> p1
+                        )
+    where r-enter(|"strategoxt/syntax/java-front/lib/java/postprocess/java-concat-ids.str", "concat-id-java-pascal-case", "27,2,28,62")
+          <+ r-exit(
+             | "strategoxt/syntax/java-front/lib/java/postprocess/java-concat-ids.str"
+             , "concat-id-java-pascal-case"
+             , "27"
+             , "2"
+             , "28"
+             , "62"
+             )
+             ; fail
+
+  concat-id-pascal-case :
+    ConcatIds(xs) -> <r-exit(
+                      | "strategoxt/syntax/java-front/lib/java/postprocess/java-concat-ids.str"
+                      , "concat-id-pascal-case"
+                      , "31"
+                      , "2"
+                      , "34"
+                      , "34"
+                      )> <s-step(
+                          | "strategoxt/syntax/java-front/lib/java/postprocess/java-concat-ids.str"
+                          , "32"
+                          , "22"
+                          , "32"
+                          , "35"
+                          )
+                          ; concat-strings> xs'
+    where r-enter(|"strategoxt/syntax/java-front/lib/java/postprocess/java-concat-ids.str", "concat-id-pascal-case", "31,2,34,34")
+          <+ r-exit(
+             | "strategoxt/syntax/java-front/lib/java/postprocess/java-concat-ids.str"
+             , "concat-id-pascal-case"
+             , "31"
+             , "2"
+             , "34"
+             , "34"
+             )
+             ; fail
+    where s-step(
+          | "strategoxt/syntax/java-front/lib/java/postprocess/java-concat-ids.str"
+          , "34"
+          , "6"
+          , "34"
+          , "34"
+          )
+          ; xs' := <s-step(
+                    | "strategoxt/syntax/java-front/lib/java/postprocess/java-concat-ids.str"
+                    , "34"
+                    , "14"
+                    , "34"
+                    , "30"
+                    )
+                    ; map(
+                        s-step(
+                        | "strategoxt/syntax/java-front/lib/java/postprocess/java-concat-ids.str"
+                        , "34"
+                        , "18"
+                        , "34"
+                        , "29"
+                        )
+                        ; give-capital
+                      )> xs
+          <+ r-exit(
+             | "strategoxt/syntax/java-front/lib/java/postprocess/java-concat-ids.str"
+             , "concat-id-pascal-case"
+             , "31"
+             , "2"
+             , "34"
+             , "34"
+             )
+             ; fail
+
+  concat-id-underscore-camel-case :
+    ConcatIds(["_", x|xs]) -> <r-exit(
+                               | "strategoxt/syntax/java-front/lib/java/postprocess/java-concat-ids.str"
+                               , "concat-id-underscore-camel-case"
+                               , "37"
+                               , "2"
+                               , "40"
+                               , "34"
+                               )> <s-step(
+                                   | "strategoxt/syntax/java-front/lib/java/postprocess/java-concat-ids.str"
+                                   , "38"
+                                   , "33"
+                                   , "38"
+                                   , "46"
+                                   )
+                                   ; concat-strings> ["_", x|xs']
+    where r-enter(|"strategoxt/syntax/java-front/lib/java/postprocess/java-concat-ids.str", "concat-id-underscore-camel-case", "37,2,40,34")
+          <+ r-exit(
+             | "strategoxt/syntax/java-front/lib/java/postprocess/java-concat-ids.str"
+             , "concat-id-underscore-camel-case"
+             , "37"
+             , "2"
+             , "40"
+             , "34"
+             )
+             ; fail
+    where s-step(
+          | "strategoxt/syntax/java-front/lib/java/postprocess/java-concat-ids.str"
+          , "40"
+          , "6"
+          , "40"
+          , "34"
+          )
+          ; xs' := <s-step(
+                    | "strategoxt/syntax/java-front/lib/java/postprocess/java-concat-ids.str"
+                    , "40"
+                    , "14"
+                    , "40"
+                    , "30"
+                    )
+                    ; map(
+                        s-step(
+                        | "strategoxt/syntax/java-front/lib/java/postprocess/java-concat-ids.str"
+                        , "40"
+                        , "18"
+                        , "40"
+                        , "29"
+                        )
+                        ; give-capital
+                      )> xs
+          <+ r-exit(
+             | "strategoxt/syntax/java-front/lib/java/postprocess/java-concat-ids.str"
+             , "concat-id-underscore-camel-case"
+             , "37"
+             , "2"
+             , "40"
+             , "34"
+             )
+             ; fail
+
+  concat-id-camel-case :
+    ConcatIds([x|xs]) -> <r-exit(
+                          | "strategoxt/syntax/java-front/lib/java/postprocess/java-concat-ids.str"
+                          , "concat-id-camel-case"
+                          , "43"
+                          , "2"
+                          , "46"
+                          , "34"
+                          )> <s-step(
+                              | "strategoxt/syntax/java-front/lib/java/postprocess/java-concat-ids.str"
+                              , "44"
+                              , "28"
+                              , "44"
+                              , "41"
+                              )
+                              ; concat-strings> [x|xs']
+    where r-enter(|"strategoxt/syntax/java-front/lib/java/postprocess/java-concat-ids.str", "concat-id-camel-case", "43,2,46,34")
+          <+ r-exit(
+             | "strategoxt/syntax/java-front/lib/java/postprocess/java-concat-ids.str"
+             , "concat-id-camel-case"
+             , "43"
+             , "2"
+             , "46"
+             , "34"
+             )
+             ; fail
+    where s-step(
+          | "strategoxt/syntax/java-front/lib/java/postprocess/java-concat-ids.str"
+          , "46"
+          , "6"
+          , "46"
+          , "34"
+          )
+          ; xs' := <s-step(
+                    | "strategoxt/syntax/java-front/lib/java/postprocess/java-concat-ids.str"
+                    , "46"
+                    , "14"
+                    , "46"
+                    , "30"
+                    )
+                    ; map(
+                        s-step(
+                        | "strategoxt/syntax/java-front/lib/java/postprocess/java-concat-ids.str"
+                        , "46"
+                        , "18"
+                        , "46"
+                        , "29"
+                        )
+                        ; give-capital
+                      )> xs
+          <+ r-exit(
+             | "strategoxt/syntax/java-front/lib/java/postprocess/java-concat-ids.str"
+             , "concat-id-camel-case"
+             , "43"
+             , "2"
+             , "46"
+             , "34"
+             )
+             ; fail
+
   give-capital =
-    string-as-chars([to-upper | id])
+    s-enter(
+    | "strategoxt/syntax/java-front/lib/java/postprocess/java-concat-ids.str"
+    , "give-capital"
+    , "48"
+    , "2"
+    , "49"
+    , "35"
+    )
+    ; s-step(
+      | "strategoxt/syntax/java-front/lib/java/postprocess/java-concat-ids.str"
+      , "49"
+      , "4"
+      , "49"
+      , "35"
+      )
+    ; string-as-chars(
+        s-step(
+        | "strategoxt/syntax/java-front/lib/java/postprocess/java-concat-ids.str"
+        , "49"
+        , "20"
+        , "49"
+        , "34"
+        )
+        ; [s-step(
+           | "strategoxt/syntax/java-front/lib/java/postprocess/java-concat-ids.str"
+           , "49"
+           , "21"
+           , "49"
+           , "28"
+           )
+           ; to-upper|s-step(
+                      | "strategoxt/syntax/java-front/lib/java/postprocess/java-concat-ids.str"
+                      , "49"
+                      , "32"
+                      , "49"
+                      , "33"
+                      )
+                      ; id]
+      )
+    < s-exit(
+      | "strategoxt/syntax/java-front/lib/java/postprocess/java-concat-ids.str"
+      , "give-capital"
+      , "48"
+      , "2"
+      , "49"
+      , "35"
+      )
+    + s-exit(
+      | "strategoxt/syntax/java-front/lib/java/postprocess/java-concat-ids.str"
+      , "give-capital"
+      , "48"
+      , "2"
+      , "49"
+      , "35"
+      )
+      ; fail

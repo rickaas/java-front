@@ -1,128 +1,819 @@
 module java/postprocess/java-lift-eblocks
 
 imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
   libstratego-lib
-
-/*
-
-Semantics that this transformation gives to e-blocks (is somewhat dubious):
-
-   Plus(PreEBlock([Assign(x1, e1)], PostEBlock(e2, [Assign(x3,e3)])),
-        PreEBlock([Assign(x4, e4)], PostEBlock(e5, [Assign(x6,e6)])))
-
-->
-
-   [Assign(x1, e1),
-    Assign(x4, e4),
-    Plus(e2, e5),
-    Assign(x3, e3),
-    Assign(x6, e6)]
-
-with left-to-right evaluation would we not expect the x3 assignment to happen
-before the x4 assignment?
-
-*/
 
 
 strategies
-
   java-lift-eblocks =
-    bottomup(try( java-desugar-prepostblock <+ java-lift-to-block-level ))
+    s-enter(
+    | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+    , "java-lift-eblocks"
+    , "29"
+    , "2"
+    , "30"
+    , "73"
+    )
+    ; s-step(
+      | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+      , "30"
+      , "4"
+      , "30"
+      , "73"
+      )
+    ; bottomup(
+        s-step(
+        | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+        , "30"
+        , "13"
+        , "30"
+        , "72"
+        )
+        ; try(
+            s-step(
+            | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+            , "30"
+            , "18"
+            , "30"
+            , "70"
+            )
+            ; (s-step(
+               | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+               , "30"
+               , "18"
+               , "30"
+               , "42"
+               )
+               ; java-desugar-prepostblock
+               <+ s-step(
+                  | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+                  , "30"
+                  , "47"
+                  , "30"
+                  , "70"
+                  )
+                  ; java-lift-to-block-level)
+          )
+      )
+    < s-exit(
+      | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+      , "java-lift-eblocks"
+      , "29"
+      , "2"
+      , "30"
+      , "73"
+      )
+    + s-exit(
+      | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+      , "java-lift-eblocks"
+      , "29"
+      , "2"
+      , "30"
+      , "73"
+      )
+      ; fail
 
   java-desugar-prepostblock :
-    PrePostEBlock(pre, expr, post) -> PreEBlock(pre, PostEBlock(expr, post) )
+    PrePostEBlock(pre, expr, post) -> <r-exit(
+                                       | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+                                       , "java-desugar-prepostblock"
+                                       , "32"
+                                       , "2"
+                                       , "33"
+                                       , "76"
+                                       )> PreEBlock(pre, PostEBlock(expr, post))
+    where r-enter(|"strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str", "java-desugar-prepostblock", "32,2,33,76")
+          <+ r-exit(
+             | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+             , "java-desugar-prepostblock"
+             , "32"
+             , "2"
+             , "33"
+             , "76"
+             )
+             ; fail
 
-  java-lift-to-block-level = 
-        java-lift-from-blocks 
-    <+  java-lift-from-constructor-blocks
-    <+  java-lift-from-switchgroup-blocks
-  
-  java-lift-from-blocks : 
-    Block(bstm1*) -> Block(bstm2*)
-    with bstm2* := <mapconcat(java-local-lift-eblocks)> bstm1*
+  java-lift-to-block-level =
+    s-enter(
+    | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+    , "java-lift-to-block-level"
+    , "35"
+    , "2"
+    , "38"
+    , "40"
+    )
+    ; s-step(
+      | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+      , "36"
+      , "8"
+      , "38"
+      , "40"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+       , "36"
+       , "8"
+       , "36"
+       , "28"
+       )
+       ; java-lift-from-blocks
+       <+ s-step(
+          | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+          , "37"
+          , "8"
+          , "38"
+          , "40"
+          )
+          ; (s-step(
+             | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+             , "37"
+             , "8"
+             , "37"
+             , "40"
+             )
+             ; java-lift-from-constructor-blocks
+             <+ s-step(
+                | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+                , "38"
+                , "8"
+                , "38"
+                , "40"
+                )
+                ; java-lift-from-switchgroup-blocks))
+    < s-exit(
+      | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+      , "java-lift-to-block-level"
+      , "35"
+      , "2"
+      , "38"
+      , "40"
+      )
+    + s-exit(
+      | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+      , "java-lift-to-block-level"
+      , "35"
+      , "2"
+      , "38"
+      , "40"
+      )
+      ; fail
+
+  java-lift-from-blocks :
+    Block(bstm1*) -> <r-exit(
+                      | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+                      , "java-lift-from-blocks"
+                      , "40"
+                      , "2"
+                      , "42"
+                      , "61"
+                      )> Block(bstm2*)
+    where r-enter(|"strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str", "java-lift-from-blocks", "40,2,42,61")
+          <+ r-exit(
+             | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+             , "java-lift-from-blocks"
+             , "40"
+             , "2"
+             , "42"
+             , "61"
+             )
+             ; fail
+    with s-step(
+         | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+         , "42"
+         , "9"
+         , "42"
+         , "61"
+         )
+         ; bstm2* := <s-step(
+                      | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+                      , "42"
+                      , "20"
+                      , "42"
+                      , "53"
+                      )
+                      ; mapconcat(
+                          s-step(
+                          | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+                          , "42"
+                          , "30"
+                          , "42"
+                          , "52"
+                          )
+                          ; java-local-lift-eblocks
+                        )> bstm1*
+         <+ r-exit(
+            | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+            , "java-lift-from-blocks"
+            , "40"
+            , "2"
+            , "42"
+            , "61"
+            )
+            ; fail
 
   java-lift-from-constructor-blocks :
-    ConstrBody(x, bstm1*) -> ConstrBody(x, bstm2*) 
-    with bstm2* := <mapconcat(java-local-lift-eblocks)> bstm1*
+    ConstrBody(x, bstm1*) -> <r-exit(
+                              | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+                              , "java-lift-from-constructor-blocks"
+                              , "44"
+                              , "2"
+                              , "46"
+                              , "61"
+                              )> ConstrBody(x, bstm2*)
+    where r-enter(|"strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str", "java-lift-from-constructor-blocks", "44,2,46,61")
+          <+ r-exit(
+             | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+             , "java-lift-from-constructor-blocks"
+             , "44"
+             , "2"
+             , "46"
+             , "61"
+             )
+             ; fail
+    with s-step(
+         | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+         , "46"
+         , "9"
+         , "46"
+         , "61"
+         )
+         ; bstm2* := <s-step(
+                      | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+                      , "46"
+                      , "20"
+                      , "46"
+                      , "53"
+                      )
+                      ; mapconcat(
+                          s-step(
+                          | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+                          , "46"
+                          , "30"
+                          , "46"
+                          , "52"
+                          )
+                          ; java-local-lift-eblocks
+                        )> bstm1*
+         <+ r-exit(
+            | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+            , "java-lift-from-constructor-blocks"
+            , "44"
+            , "2"
+            , "46"
+            , "61"
+            )
+            ; fail
 
   java-lift-from-switchgroup-blocks :
-    SwitchGroup(x, bstm1*) -> SwitchGroup(x, bstm2*)
-    with bstm2* := <mapconcat(java-local-lift-eblocks)> bstm1*
-      
-  /**
-   * @todo  Nested EBlocks?
-   * @todo  Nested Blocks?
-   * @todo  Is Block the only block level element?
-   * @todo  Anonymous inner classes?
-   */
+    SwitchGroup(x, bstm1*) -> <r-exit(
+                               | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+                               , "java-lift-from-switchgroup-blocks"
+                               , "48"
+                               , "2"
+                               , "50"
+                               , "61"
+                               )> SwitchGroup(x, bstm2*)
+    where r-enter(|"strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str", "java-lift-from-switchgroup-blocks", "48,2,50,61")
+          <+ r-exit(
+             | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+             , "java-lift-from-switchgroup-blocks"
+             , "48"
+             , "2"
+             , "50"
+             , "61"
+             )
+             ; fail
+    with s-step(
+         | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+         , "50"
+         , "9"
+         , "50"
+         , "61"
+         )
+         ; bstm2* := <s-step(
+                      | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+                      , "50"
+                      , "20"
+                      , "50"
+                      , "53"
+                      )
+                      ; mapconcat(
+                          s-step(
+                          | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+                          , "50"
+                          , "30"
+                          , "50"
+                          , "52"
+                          )
+                          ; java-local-lift-eblocks
+                        )> bstm1*
+         <+ r-exit(
+            | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+            , "java-lift-from-switchgroup-blocks"
+            , "48"
+            , "2"
+            , "50"
+            , "61"
+            )
+            ; fail
+
   java-local-lift-eblocks =
-      java-collect-split-om-pre-eblock
-    ; ?(<id>, pre-stms)
-    ; java-collect-split-om-post-eblock
-    ; ?(t, post-stms)
-    ; if !post-stms => []; !pre-stms => [] then
-        ![t]
-      else 
-        <concat> [<mapconcat(java-local-lift-eblocks)> pre-stms, <java-local-lift-eblocks> t, <mapconcat(java-local-lift-eblocks)> post-stms]
+    s-enter(
+    | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+    , "java-local-lift-eblocks"
+    , "58"
+    , "2"
+    , "67"
+    , "8"
+    )
+    ; s-step(
+      | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+      , "59"
+      , "6"
+      , "67"
+      , "8"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+       , "59"
+       , "6"
+       , "59"
+       , "37"
+       )
+       ; java-collect-split-om-pre-eblock)
+    ; s-step(
+      | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+      , "60"
+      , "6"
+      , "67"
+      , "8"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+       , "60"
+       , "6"
+       , "60"
+       , "22"
+       )
+       ; ?( <s-step(
+             | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+             , "60"
+             , "9"
+             , "60"
+             , "10"
+             )
+             ; id>
+          , pre-stms
+          ))
+    ; s-step(
+      | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+      , "61"
+      , "6"
+      , "67"
+      , "8"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+       , "61"
+       , "6"
+       , "61"
+       , "38"
+       )
+       ; java-collect-split-om-post-eblock)
+    ; s-step(
+      | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+      , "62"
+      , "6"
+      , "67"
+      , "8"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+       , "62"
+       , "6"
+       , "62"
+       , "20"
+       )
+       ; ?(t, post-stms))
+    ; s-step(
+      | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+      , "63"
+      , "6"
+      , "67"
+      , "8"
+      )
+    ; if s-step(
+         | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+         , "63"
+         , "9"
+         , "63"
+         , "41"
+         )
+         ; (s-step(
+            | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+            , "63"
+            , "9"
+            , "63"
+            , "24"
+            )
+            ; (s-step(
+               | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+               , "63"
+               , "9"
+               , "63"
+               , "18"
+               )
+               ; !post-stms) => [])
+         ; s-step(
+           | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+           , "63"
+           , "27"
+           , "63"
+           , "41"
+           )
+         ; (s-step(
+            | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+            , "63"
+            , "27"
+            , "63"
+            , "35"
+            )
+            ; !pre-stms) => [] then
+        s-step(
+        | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+        , "64"
+        , "8"
+        , "64"
+        , "11"
+        )
+        ; ![t]
+      else
+        s-step(
+        | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+        , "66"
+        , "8"
+        , "66"
+        , "140"
+        )
+        ; <(s-step(
+            | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+            , "66"
+            , "9"
+            , "66"
+            , "14"
+            )
+            ; concat)> [ <s-step(
+                          | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+                          , "66"
+                          , "19"
+                          , "66"
+                          , "52"
+                          )
+                          ; mapconcat(
+                              s-step(
+                              | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+                              , "66"
+                              , "29"
+                              , "66"
+                              , "51"
+                              )
+                              ; java-local-lift-eblocks
+                            )> pre-stms
+                       , <s-step(
+                          | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+                          , "66"
+                          , "66"
+                          , "66"
+                          , "88"
+                          )
+                          ; java-local-lift-eblocks> t
+                       , <s-step(
+                          | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+                          , "66"
+                          , "95"
+                          , "66"
+                          , "128"
+                          )
+                          ; mapconcat(
+                              s-step(
+                              | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+                              , "66"
+                              , "105"
+                              , "66"
+                              , "127"
+                              )
+                              ; java-local-lift-eblocks
+                            )> post-stms
+                       ]
       end
+    < s-exit(
+      | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+      , "java-local-lift-eblocks"
+      , "58"
+      , "2"
+      , "67"
+      , "8"
+      )
+    + s-exit(
+      | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+      , "java-local-lift-eblocks"
+      , "58"
+      , "2"
+      , "67"
+      , "8"
+      )
+      ; fail
 
   java-collect-split-om-pre-eblock =
-    rules( JavaPreEBlocks := [] )
-    ; alltd(java-lift-pre-eblock)
-    ; !(<id>,<JavaPreEBlocks>)
+    s-enter(
+    | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+    , "java-collect-split-om-pre-eblock"
+    , "69"
+    , "2"
+    , "72"
+    , "29"
+    )
+    ; s-step(
+      | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+      , "70"
+      , "4"
+      , "72"
+      , "29"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+       , "70"
+       , "4"
+       , "70"
+       , "32"
+       )
+       ; rules ( JavaPreEBlocks := [] ))
+    ; s-step(
+      | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+      , "71"
+      , "6"
+      , "72"
+      , "29"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+       , "71"
+       , "6"
+       , "71"
+       , "32"
+       )
+       ; alltd(
+           s-step(
+           | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+           , "71"
+           , "12"
+           , "71"
+           , "31"
+           )
+           ; java-lift-pre-eblock
+         ))
+    ; s-step(
+      | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+      , "72"
+      , "6"
+      , "72"
+      , "29"
+      )
+    ; !( <s-step(
+          | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+          , "72"
+          , "9"
+          , "72"
+          , "10"
+          )
+          ; id>
+       , <s-step(
+          | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+          , "72"
+          , "14"
+          , "72"
+          , "27"
+          )
+          ; JavaPreEBlocks>
+       )
+    < s-exit(
+      | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+      , "java-collect-split-om-pre-eblock"
+      , "69"
+      , "2"
+      , "72"
+      , "29"
+      )
+    + s-exit(
+      | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+      , "java-collect-split-om-pre-eblock"
+      , "69"
+      , "2"
+      , "72"
+      , "29"
+      )
+      ; fail
 
   java-lift-pre-eblock :
-    PreEBlock(bstm*, e) -> e
-    with rules( JavaPreEBlocks := <conc>(bstm*, <JavaPreEBlocks>) )
+    PreEBlock(bstm*, e) -> <r-exit(
+                            | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+                            , "java-lift-pre-eblock"
+                            , "74"
+                            , "2"
+                            , "76"
+                            , "66"
+                            )> e
+    where r-enter(|"strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str", "java-lift-pre-eblock", "74,2,76,66")
+          <+ r-exit(
+             | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+             , "java-lift-pre-eblock"
+             , "74"
+             , "2"
+             , "76"
+             , "66"
+             )
+             ; fail
+    with s-step(
+         | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+         , "76"
+         , "9"
+         , "76"
+         , "66"
+         )
+         ; rules (
+             JavaPreEBlocks := <s-step(
+                                | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+                                , "76"
+                                , "35"
+                                , "76"
+                                , "38"
+                                )
+                                ; conc> ( bstm*
+                                        , <s-step(
+                                           | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+                                           , "76"
+                                           , "49"
+                                           , "76"
+                                           , "62"
+                                           )
+                                           ; JavaPreEBlocks>
+                                        )
+           )
+         <+ r-exit(
+            | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+            , "java-lift-pre-eblock"
+            , "74"
+            , "2"
+            , "76"
+            , "66"
+            )
+            ; fail
 
   java-collect-split-om-post-eblock =
-    rules( JavaPostEBlocks := [] )
-    ; alltd(java-lift-post-eblock)
-    ; !(<id>,<JavaPostEBlocks>)
+    s-enter(
+    | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+    , "java-collect-split-om-post-eblock"
+    , "78"
+    , "2"
+    , "81"
+    , "30"
+    )
+    ; s-step(
+      | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+      , "79"
+      , "4"
+      , "81"
+      , "30"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+       , "79"
+       , "4"
+       , "79"
+       , "33"
+       )
+       ; rules ( JavaPostEBlocks := [] ))
+    ; s-step(
+      | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+      , "80"
+      , "6"
+      , "81"
+      , "30"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+       , "80"
+       , "6"
+       , "80"
+       , "33"
+       )
+       ; alltd(
+           s-step(
+           | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+           , "80"
+           , "12"
+           , "80"
+           , "32"
+           )
+           ; java-lift-post-eblock
+         ))
+    ; s-step(
+      | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+      , "81"
+      , "6"
+      , "81"
+      , "30"
+      )
+    ; !( <s-step(
+          | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+          , "81"
+          , "9"
+          , "81"
+          , "10"
+          )
+          ; id>
+       , <s-step(
+          | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+          , "81"
+          , "14"
+          , "81"
+          , "28"
+          )
+          ; JavaPostEBlocks>
+       )
+    < s-exit(
+      | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+      , "java-collect-split-om-post-eblock"
+      , "78"
+      , "2"
+      , "81"
+      , "30"
+      )
+    + s-exit(
+      | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+      , "java-collect-split-om-post-eblock"
+      , "78"
+      , "2"
+      , "81"
+      , "30"
+      )
+      ; fail
 
   java-lift-post-eblock :
-    PostEBlock(e, bstm*) -> e
-    with rules( JavaPostEBlocks := <conc>(bstm*, <JavaPostEBlocks>) )
-
-/*
-  collect-split-om-pre-eblock =
-    rules( JavaPreEBlocks := [] )
-    ; alltd(lift-pre-eblock)
-    ; !(<id>,<JavaPreEBlocks>)
-
-  lift-pre-eblock :
-    PreEBlock(bstm*, e) -> e
-    with rules( JavaPreEBlocks := <conc>(bstm*, <JavaPreEBlocks>) )
-
-  collect-split-om-post-eblock =
-    rules( JavaPostEBlocks := [] )
-    ; alltd(java-lift-post-eblock)
-    ; !(<id>,<JavaPostEBlocks>)
-
-  lift-post-eblock :
-    PostEBlock(e, bstm*) -> e
-    with rules( JavaPostEBlocks := <conc>(bstm*, <JavaPostEBlocks>) )
-*/
-
-/*
-
-  collect-split-om-pre-eblock =
-    !(<alltd(?PreEBlock(_, <id>))>,<collect-om(?PreEBlock(<id>, _), conc); concat>)
-
-  collect-split-om-post-eblock =
-    !(<alltd(?PostEBlock(<id>, _))>, <collect-om(?PostEBlock(_, <id>), conc); concat>)
-*/
-
-/*
-
-  flatten-inner-block = 
-    \ [ InnerBlock(ys) | xs ] -> <conc>(<flatten-inner-block>ys, <flatten-inner-block>xs) \; say(!"InnerBlock")
-      <+
-    \ [ x | xs ] -> [ x | <flatten-inner-block>xs ] \
-      <+
-    \ [ InnerBlock(ys) | [] ] -> <flatten-inner-block> ys \; say(!"InnerBlock")
-      <+
-    \ [ x | [] ] -> [ x ] \
-      <+
-    ?[]
-*/
+    PostEBlock(e, bstm*) -> <r-exit(
+                             | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+                             , "java-lift-post-eblock"
+                             , "83"
+                             , "2"
+                             , "85"
+                             , "68"
+                             )> e
+    where r-enter(|"strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str", "java-lift-post-eblock", "83,2,85,68")
+          <+ r-exit(
+             | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+             , "java-lift-post-eblock"
+             , "83"
+             , "2"
+             , "85"
+             , "68"
+             )
+             ; fail
+    with s-step(
+         | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+         , "85"
+         , "9"
+         , "85"
+         , "68"
+         )
+         ; rules (
+             JavaPostEBlocks := <s-step(
+                                 | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+                                 , "85"
+                                 , "36"
+                                 , "85"
+                                 , "39"
+                                 )
+                                 ; conc> ( bstm*
+                                         , <s-step(
+                                            | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+                                            , "85"
+                                            , "50"
+                                            , "85"
+                                            , "64"
+                                            )
+                                            ; JavaPostEBlocks>
+                                         )
+           )
+         <+ r-exit(
+            | "strategoxt/syntax/java-front/lib/java/postprocess/java-lift-eblocks.str"
+            , "java-lift-post-eblock"
+            , "83"
+            , "2"
+            , "85"
+            , "68"
+            )
+            ; fail

@@ -1,77 +1,652 @@
-/**
- * Testsuite for libjava-front.
- *
- * @author Martin Bravenboer.
- */
 module libjava-front-tests
-imports 
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
   libstratego-lib
   libjava-front
 
-strategies
 
+strategies
   main-libjava-front-tests =
-    test-suite(!"libjava-front tests",
-      parse-string-tests
-      ; pp-string-tests
+    s-enter(
+    | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+    , "main-libjava-front-tests"
+    , "13"
+    , "2"
+    , "17"
+    , "4"
     )
+    ; s-step(
+      | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+      , "14"
+      , "4"
+      , "17"
+      , "4"
+      )
+    ; test-suite(
+        s-step(
+        | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+        , "14"
+        , "15"
+        , "14"
+        , "36"
+        )
+        ; !"libjava-front tests"
+      , s-step(
+        | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+        , "15"
+        , "6"
+        , "16"
+        , "22"
+        )
+        ; (s-step(
+           | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+           , "15"
+           , "6"
+           , "15"
+           , "23"
+           )
+           ; parse-string-tests)
+        ; s-step(
+          | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+          , "16"
+          , "8"
+          , "16"
+          , "22"
+          )
+        ; pp-string-tests
+      )
+    < s-exit(
+      | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+      , "main-libjava-front-tests"
+      , "13"
+      , "2"
+      , "17"
+      , "4"
+      )
+    + s-exit(
+      | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+      , "main-libjava-front-tests"
+      , "13"
+      , "2"
+      , "17"
+      , "4"
+      )
+      ; fail
 
-/**
- * Parsing
- */
+
 strategies
+  parse-string-tests =
+    s-enter(
+    | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+    , "parse-string-tests"
+    , "24"
+    , "2"
+    , "27"
+    , "75"
+    )
+    ; s-step(
+      | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+      , "24"
+      , "23"
+      , "27"
+      , "75"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+       , "24"
+       , "23"
+       , "24"
+       , "24"
+       )
+       ; id)
+    ; s-step(
+      | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+      , "25"
+      , "6"
+      , "27"
+      , "75"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+       , "25"
+       , "6"
+       , "25"
+       , "52"
+       )
+       ; parse-string-test(
+         | "0"
+         , "Expr"
+         , Lit(Deci("0"))
+         ))
+    ; s-step(
+      | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+      , "26"
+      , "6"
+      , "27"
+      , "75"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+       , "26"
+       , "6"
+       , "26"
+       , "76"
+       )
+       ; parse-string-test(
+         | "1+2"
+         , "Expr"
+         , Plus(
+             Lit(Deci("1"))
+           , Lit(Deci("2"))
+           )
+         ))
+    ; s-step(
+      | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+      , "27"
+      , "6"
+      , "27"
+      , "75"
+      )
+    ; parse-string-test(
+      | "1*2"
+      , "Expr"
+      , Mul(
+          Lit(Deci("1"))
+        , Lit(Deci("2"))
+        )
+      )
+    < s-exit(
+      | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+      , "parse-string-tests"
+      , "24"
+      , "2"
+      , "27"
+      , "75"
+      )
+    + s-exit(
+      | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+      , "parse-string-tests"
+      , "24"
+      , "2"
+      , "27"
+      , "75"
+      )
+      ; fail
 
-  parse-string-tests = id
-    ; parse-string-test(|"0", "Expr", Lit(Deci("0")))
-    ; parse-string-test(|"1+2", "Expr", Plus(Lit(Deci("1")), Lit(Deci("2"))))
-    ; parse-string-test(|"1*2", "Expr", Mul(Lit(Deci("1")), Lit(Deci("2"))))
 
-/**
- * Pretty-printing
- */
 strategies
-
-  pp-string-tests = id
-    ; pp-string-test(|"0", "Expr")
-    ; pp-string-test(|"1 * 2", "Expr")
-    ; pp-string-test(|"1 + 2", "Expr")
-    ; pp-string-test(|"f()", "Expr")
-    ; pp-string-test(|"new int[]{}", "Expr")
-    ; pp-string-test(|"new int[]{1, 2, 3}", "Expr")
-    ; pp-string-test(|"new int[3]", "Expr")
-    ; pp-string-test(|"new int[3][]", "Expr")
-    ; pp-string-test(|"new int[3][4][]", "Expr")
+  pp-string-tests =
+    s-enter(
+    | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+    , "pp-string-tests"
+    , "34"
+    , "2"
+    , "44"
+    , "46"
+    )
+    ; s-step(
+      | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+      , "34"
+      , "20"
+      , "44"
+      , "46"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+       , "34"
+       , "20"
+       , "34"
+       , "21"
+       )
+       ; id)
+    ; s-step(
+      | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+      , "35"
+      , "6"
+      , "44"
+      , "46"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+       , "35"
+       , "6"
+       , "35"
+       , "33"
+       )
+       ; pp-string-test(|"0", "Expr"))
+    ; s-step(
+      | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+      , "36"
+      , "6"
+      , "44"
+      , "46"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+       , "36"
+       , "6"
+       , "36"
+       , "37"
+       )
+       ; pp-string-test(|"1 * 2", "Expr"))
+    ; s-step(
+      | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+      , "37"
+      , "6"
+      , "44"
+      , "46"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+       , "37"
+       , "6"
+       , "37"
+       , "37"
+       )
+       ; pp-string-test(|"1 + 2", "Expr"))
+    ; s-step(
+      | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+      , "38"
+      , "6"
+      , "44"
+      , "46"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+       , "38"
+       , "6"
+       , "38"
+       , "35"
+       )
+       ; pp-string-test(|"f()", "Expr"))
+    ; s-step(
+      | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+      , "39"
+      , "6"
+      , "44"
+      , "46"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+       , "39"
+       , "6"
+       , "39"
+       , "43"
+       )
+       ; pp-string-test(|"new int[]{}", "Expr"))
+    ; s-step(
+      | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+      , "40"
+      , "6"
+      , "44"
+      , "46"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+       , "40"
+       , "6"
+       , "40"
+       , "50"
+       )
+       ; pp-string-test(|"new int[]{1, 2, 3}", "Expr"))
+    ; s-step(
+      | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+      , "41"
+      , "6"
+      , "44"
+      , "46"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+       , "41"
+       , "6"
+       , "41"
+       , "42"
+       )
+       ; pp-string-test(|"new int[3]", "Expr"))
+    ; s-step(
+      | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+      , "42"
+      , "6"
+      , "44"
+      , "46"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+       , "42"
+       , "6"
+       , "42"
+       , "44"
+       )
+       ; pp-string-test(|"new int[3][]", "Expr"))
+    ; s-step(
+      | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+      , "43"
+      , "6"
+      , "44"
+      , "46"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+       , "43"
+       , "6"
+       , "43"
+       , "47"
+       )
+       ; pp-string-test(|"new int[3][4][]", "Expr"))
+    ; s-step(
+      | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+      , "44"
+      , "6"
+      , "44"
+      , "46"
+      )
     ; pp-string-test(|"new int[3][][]", "Expr")
+    < s-exit(
+      | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+      , "pp-string-tests"
+      , "34"
+      , "2"
+      , "44"
+      , "46"
+      )
+    + s-exit(
+      | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+      , "pp-string-tests"
+      , "34"
+      , "2"
+      , "44"
+      , "46"
+      )
+      ; fail
 
-/**
- * Testing utils
- */
+
 strategies
-
   parse-string-test(|input, sort, result) =
-    apply-test(
-      <conc-strings> ("parse ", input)
-    , parse-java-string(|sort)
-    , !input
-    , !result
+    s-enter(
+    | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+    , "parse-string-test"
+    , "51"
+    , "2"
+    , "57"
+    , "4"
     )
+    ; s-step(
+      | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+      , "52"
+      , "4"
+      , "57"
+      , "4"
+      )
+    ; apply-test(
+        s-step(
+        | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+        , "53"
+        , "6"
+        , "53"
+        , "37"
+        )
+        ; <(s-step(
+            | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+            , "53"
+            , "7"
+            , "53"
+            , "18"
+            )
+            ; conc-strings)> ("parse ", input)
+      , s-step(
+        | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+        , "54"
+        , "6"
+        , "54"
+        , "29"
+        )
+        ; parse-java-string(|sort)
+      , s-step(
+        | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+        , "55"
+        , "6"
+        , "55"
+        , "11"
+        )
+        ; !input
+      , s-step(
+        | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+        , "56"
+        , "6"
+        , "56"
+        , "12"
+        )
+        ; !result
+      )
+    < s-exit(
+      | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+      , "parse-string-test"
+      , "51"
+      , "2"
+      , "57"
+      , "4"
+      )
+    + s-exit(
+      | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+      , "parse-string-test"
+      , "51"
+      , "2"
+      , "57"
+      , "4"
+      )
+      ; fail
 
   pp-string-test(|input, sort) =
-    apply-test(
-      <conc-strings> ("pretty-print ", input)
-    , parse-java-string(|sort)
-      ; pp-java-string
-    , !input
-    , !input
+    s-enter(
+    | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+    , "pp-string-test"
+    , "59"
+    , "2"
+    , "66"
+    , "4"
     )
+    ; s-step(
+      | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+      , "60"
+      , "4"
+      , "66"
+      , "4"
+      )
+    ; apply-test(
+        s-step(
+        | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+        , "61"
+        , "6"
+        , "61"
+        , "44"
+        )
+        ; <(s-step(
+            | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+            , "61"
+            , "7"
+            , "61"
+            , "18"
+            )
+            ; conc-strings)> ("pretty-print ", input)
+      , s-step(
+        | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+        , "62"
+        , "6"
+        , "63"
+        , "21"
+        )
+        ; (s-step(
+           | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+           , "62"
+           , "6"
+           , "62"
+           , "29"
+           )
+           ; parse-java-string(|sort))
+        ; s-step(
+          | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+          , "63"
+          , "8"
+          , "63"
+          , "21"
+          )
+        ; pp-java-string
+      , s-step(
+        | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+        , "64"
+        , "6"
+        , "64"
+        , "11"
+        )
+        ; !input
+      , s-step(
+        | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+        , "65"
+        , "6"
+        , "65"
+        , "11"
+        )
+        ; !input
+      )
+    < s-exit(
+      | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+      , "pp-string-test"
+      , "59"
+      , "2"
+      , "66"
+      , "4"
+      )
+    + s-exit(
+      | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+      , "pp-string-test"
+      , "59"
+      , "2"
+      , "66"
+      , "4"
+      )
+      ; fail
 
   roundtrip-test(|input, sort) =
-    apply-test(
-      <conc-strings> ("roundtrip ", input)
-    , parse-java-string(|sort)
-      ; ?first
-      ; pp-java-string
-      ; parse-java-string(|sort)
-    , !input
-    , !first
+    s-enter(
+    | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+    , "roundtrip-test"
+    , "68"
+    , "2"
+    , "77"
+    , "4"
     )
+    ; s-step(
+      | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+      , "69"
+      , "4"
+      , "77"
+      , "4"
+      )
+    ; apply-test(
+        s-step(
+        | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+        , "70"
+        , "6"
+        , "70"
+        , "41"
+        )
+        ; <(s-step(
+            | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+            , "70"
+            , "7"
+            , "70"
+            , "18"
+            )
+            ; conc-strings)> ("roundtrip ", input)
+      , s-step(
+        | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+        , "71"
+        , "6"
+        , "74"
+        , "31"
+        )
+        ; (s-step(
+           | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+           , "71"
+           , "6"
+           , "71"
+           , "29"
+           )
+           ; parse-java-string(|sort))
+        ; s-step(
+          | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+          , "72"
+          , "8"
+          , "74"
+          , "31"
+          )
+        ; (s-step(
+           | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+           , "72"
+           , "8"
+           , "72"
+           , "13"
+           )
+           ; ?first)
+        ; s-step(
+          | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+          , "73"
+          , "8"
+          , "74"
+          , "31"
+          )
+        ; (s-step(
+           | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+           , "73"
+           , "8"
+           , "73"
+           , "21"
+           )
+           ; pp-java-string)
+        ; s-step(
+          | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+          , "74"
+          , "8"
+          , "74"
+          , "31"
+          )
+        ; parse-java-string(|sort)
+      , s-step(
+        | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+        , "75"
+        , "6"
+        , "75"
+        , "11"
+        )
+        ; !input
+      , s-step(
+        | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+        , "76"
+        , "6"
+        , "76"
+        , "11"
+        )
+        ; !first
+      )
+    < s-exit(
+      | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+      , "roundtrip-test"
+      , "68"
+      , "2"
+      , "77"
+      , "4"
+      )
+    + s-exit(
+      | "strategoxt/syntax/java-front/test/libjava-front-tests.str"
+      , "roundtrip-test"
+      , "68"
+      , "2"
+      , "77"
+      , "4"
+      )
+      ; fail

@@ -1,8 +1,45 @@
 module jtree15-parenthesize
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 imports
   libjava-front
 
-strategies
 
+strategies
   main-jtree15-parenthesize =
-    io-java5-parenthesize
+    s-enter(
+    | "strategoxt/syntax/java-front/tools/jtree15-parenthesize.str"
+    , "main-jtree15-parenthesize"
+    , "7"
+    , "2"
+    , "8"
+    , "24"
+    )
+    ; s-step(
+      | "strategoxt/syntax/java-front/tools/jtree15-parenthesize.str"
+      , "8"
+      , "4"
+      , "8"
+      , "24"
+      )
+    ; io-java5-parenthesize
+    < s-exit(
+      | "strategoxt/syntax/java-front/tools/jtree15-parenthesize.str"
+      , "main-jtree15-parenthesize"
+      , "7"
+      , "2"
+      , "8"
+      , "24"
+      )
+    + s-exit(
+      | "strategoxt/syntax/java-front/tools/jtree15-parenthesize.str"
+      , "main-jtree15-parenthesize"
+      , "7"
+      , "2"
+      , "8"
+      , "24"
+      )
+      ; fail

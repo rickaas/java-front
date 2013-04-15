@@ -1,4 +1,9 @@
 module javafront
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 imports
   java/parse
   java/pretty-print

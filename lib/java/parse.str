@@ -1,128 +1,910 @@
-/**
- * @author Martin Bravenboer
- */
 module java/parse
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 imports
   libstratego-lib
   libstratego-sglr
 
-/**
- * Parsing from a string to a parse tree
- */
-strategies
 
-  /**
-   * @param Start sort (String)
-   * @type String -> ParseTree(sort)
-   */
+strategies
   parse-java-string-pt(|sort) =
-    where(tbl := <get-java-parse-table> sort)
-    ; parse-string-pt(strsglr-report-parse-error | tbl, sort, "string")
+    s-enter(
+    | "strategoxt/syntax/java-front/lib/java/parse.str"
+    , "parse-java-string-pt"
+    , "18"
+    , "2"
+    , "20"
+    , "70"
+    )
+    ; s-step(
+      | "strategoxt/syntax/java-front/lib/java/parse.str"
+      , "19"
+      , "4"
+      , "20"
+      , "70"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/java-front/lib/java/parse.str"
+       , "19"
+       , "4"
+       , "19"
+       , "44"
+       )
+       ; where(s-step(
+               | "strategoxt/syntax/java-front/lib/java/parse.str"
+               , "19"
+               , "10"
+               , "19"
+               , "43"
+               )
+               ; tbl := <s-step(
+                         | "strategoxt/syntax/java-front/lib/java/parse.str"
+                         , "19"
+                         , "18"
+                         , "19"
+                         , "37"
+                         )
+                         ; get-java-parse-table> sort))
+    ; s-step(
+      | "strategoxt/syntax/java-front/lib/java/parse.str"
+      , "20"
+      , "6"
+      , "20"
+      , "70"
+      )
+    ; parse-string-pt(
+        s-step(
+        | "strategoxt/syntax/java-front/lib/java/parse.str"
+        , "20"
+        , "22"
+        , "20"
+        , "47"
+        )
+        ; strsglr-report-parse-error
+      | tbl
+      , sort
+      , "string"
+      )
+    < s-exit(
+      | "strategoxt/syntax/java-front/lib/java/parse.str"
+      , "parse-java-string-pt"
+      , "18"
+      , "2"
+      , "20"
+      , "70"
+      )
+    + s-exit(
+      | "strategoxt/syntax/java-front/lib/java/parse.str"
+      , "parse-java-string-pt"
+      , "18"
+      , "2"
+      , "20"
+      , "70"
+      )
+      ; fail
 
-  /**
-   * @param Start sort (String)
-   * @type String -> sort
-   */
   parse-java-string(|sort) =
-    parse-java-string-pt(|sort)
+    s-enter(
+    | "strategoxt/syntax/java-front/lib/java/parse.str"
+    , "parse-java-string"
+    , "26"
+    , "2"
+    , "28"
+    , "18"
+    )
+    ; s-step(
+      | "strategoxt/syntax/java-front/lib/java/parse.str"
+      , "27"
+      , "4"
+      , "28"
+      , "18"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/java-front/lib/java/parse.str"
+       , "27"
+       , "4"
+       , "27"
+       , "30"
+       )
+       ; parse-java-string-pt(|sort))
+    ; s-step(
+      | "strategoxt/syntax/java-front/lib/java/parse.str"
+      , "28"
+      , "6"
+      , "28"
+      , "18"
+      )
     ; implode-asfix
+    < s-exit(
+      | "strategoxt/syntax/java-front/lib/java/parse.str"
+      , "parse-java-string"
+      , "26"
+      , "2"
+      , "28"
+      , "18"
+      )
+    + s-exit(
+      | "strategoxt/syntax/java-front/lib/java/parse.str"
+      , "parse-java-string"
+      , "26"
+      , "2"
+      , "28"
+      , "18"
+      )
+      ; fail
 
-/**
- * Parsing from a stream to a parse tree
- */ 
+
 strategies
-
   parse-java-stream-pt(|path) =
-    parse-java-stream-pt(|"CompilationUnit", path)
+    s-enter(
+    | "strategoxt/syntax/java-front/lib/java/parse.str"
+    , "parse-java-stream-pt"
+    , "35"
+    , "2"
+    , "36"
+    , "49"
+    )
+    ; s-step(
+      | "strategoxt/syntax/java-front/lib/java/parse.str"
+      , "36"
+      , "4"
+      , "36"
+      , "49"
+      )
+    ; parse-java-stream-pt(|"CompilationUnit", path)
+    < s-exit(
+      | "strategoxt/syntax/java-front/lib/java/parse.str"
+      , "parse-java-stream-pt"
+      , "35"
+      , "2"
+      , "36"
+      , "49"
+      )
+    + s-exit(
+      | "strategoxt/syntax/java-front/lib/java/parse.str"
+      , "parse-java-stream-pt"
+      , "35"
+      , "2"
+      , "36"
+      , "49"
+      )
+      ; fail
 
-  /**
-   * @param Start sort (String)
-   * @type Stream -> ParseTree(sort)
-   */
   parse-java-stream-pt(|sort, path) =
-    where(tbl := <get-java-parse-table> sort)
-    ; parse-stream-pt(strsglr-report-parse-error | tbl, sort, path)
+    s-enter(
+    | "strategoxt/syntax/java-front/lib/java/parse.str"
+    , "parse-java-stream-pt"
+    , "42"
+    , "2"
+    , "44"
+    , "66"
+    )
+    ; s-step(
+      | "strategoxt/syntax/java-front/lib/java/parse.str"
+      , "43"
+      , "4"
+      , "44"
+      , "66"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/java-front/lib/java/parse.str"
+       , "43"
+       , "4"
+       , "43"
+       , "44"
+       )
+       ; where(s-step(
+               | "strategoxt/syntax/java-front/lib/java/parse.str"
+               , "43"
+               , "10"
+               , "43"
+               , "43"
+               )
+               ; tbl := <s-step(
+                         | "strategoxt/syntax/java-front/lib/java/parse.str"
+                         , "43"
+                         , "18"
+                         , "43"
+                         , "37"
+                         )
+                         ; get-java-parse-table> sort))
+    ; s-step(
+      | "strategoxt/syntax/java-front/lib/java/parse.str"
+      , "44"
+      , "6"
+      , "44"
+      , "66"
+      )
+    ; parse-stream-pt(
+        s-step(
+        | "strategoxt/syntax/java-front/lib/java/parse.str"
+        , "44"
+        , "22"
+        , "44"
+        , "47"
+        )
+        ; strsglr-report-parse-error
+      | tbl
+      , sort
+      , path
+      )
+    < s-exit(
+      | "strategoxt/syntax/java-front/lib/java/parse.str"
+      , "parse-java-stream-pt"
+      , "42"
+      , "2"
+      , "44"
+      , "66"
+      )
+    + s-exit(
+      | "strategoxt/syntax/java-front/lib/java/parse.str"
+      , "parse-java-stream-pt"
+      , "42"
+      , "2"
+      , "44"
+      , "66"
+      )
+      ; fail
 
-/**
- * Parsing from a stream to an AST
- */
+
 strategies
-
-  /**
-   * @type Stream -> CompilationUnit
-   */
   parse-java-stream(|path) =
-    parse-java-stream(|"CompilationUnit", path)
+    s-enter(
+    | "strategoxt/syntax/java-front/lib/java/parse.str"
+    , "parse-java-stream"
+    , "54"
+    , "2"
+    , "55"
+    , "46"
+    )
+    ; s-step(
+      | "strategoxt/syntax/java-front/lib/java/parse.str"
+      , "55"
+      , "4"
+      , "55"
+      , "46"
+      )
+    ; parse-java-stream(|"CompilationUnit", path)
+    < s-exit(
+      | "strategoxt/syntax/java-front/lib/java/parse.str"
+      , "parse-java-stream"
+      , "54"
+      , "2"
+      , "55"
+      , "46"
+      )
+    + s-exit(
+      | "strategoxt/syntax/java-front/lib/java/parse.str"
+      , "parse-java-stream"
+      , "54"
+      , "2"
+      , "55"
+      , "46"
+      )
+      ; fail
 
-  /**
-   * @param Start sort (String)
-   * @type Stream -> sort
-   */
   parse-java-stream(|sort, path) =
-    parse-java-stream-pt(|sort, path)
+    s-enter(
+    | "strategoxt/syntax/java-front/lib/java/parse.str"
+    , "parse-java-stream"
+    , "61"
+    , "2"
+    , "63"
+    , "18"
+    )
+    ; s-step(
+      | "strategoxt/syntax/java-front/lib/java/parse.str"
+      , "62"
+      , "4"
+      , "63"
+      , "18"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/java-front/lib/java/parse.str"
+       , "62"
+       , "4"
+       , "62"
+       , "36"
+       )
+       ; parse-java-stream-pt(|sort, path))
+    ; s-step(
+      | "strategoxt/syntax/java-front/lib/java/parse.str"
+      , "63"
+      , "6"
+      , "63"
+      , "18"
+      )
     ; implode-asfix
+    < s-exit(
+      | "strategoxt/syntax/java-front/lib/java/parse.str"
+      , "parse-java-stream"
+      , "61"
+      , "2"
+      , "63"
+      , "18"
+      )
+    + s-exit(
+      | "strategoxt/syntax/java-front/lib/java/parse.str"
+      , "parse-java-stream"
+      , "61"
+      , "2"
+      , "63"
+      , "18"
+      )
+      ; fail
 
-/**
- * Strategies for making Java to Java source transformation tools.
- *
- * @todo Make Java specific option descriptions (not ATerm to ATerm)
- */
+
 strategies
-
   io-java2java-wrap(s) =
-    io-stream-wrap(io-java2java(s))
+    s-enter(
+    | "strategoxt/syntax/java-front/lib/java/parse.str"
+    , "io-java2java-wrap"
+    , "72"
+    , "2"
+    , "73"
+    , "34"
+    )
+    ; s-step(
+      | "strategoxt/syntax/java-front/lib/java/parse.str"
+      , "73"
+      , "4"
+      , "73"
+      , "34"
+      )
+    ; io-stream-wrap(
+        s-step(
+        | "strategoxt/syntax/java-front/lib/java/parse.str"
+        , "73"
+        , "19"
+        , "73"
+        , "33"
+        )
+        ; io-java2java(
+            s-step(
+            | "strategoxt/syntax/java-front/lib/java/parse.str"
+            , "73"
+            , "32"
+            , "73"
+            , "32"
+            )
+            ; s
+          )
+      )
+    < s-exit(
+      | "strategoxt/syntax/java-front/lib/java/parse.str"
+      , "io-java2java-wrap"
+      , "72"
+      , "2"
+      , "73"
+      , "34"
+      )
+    + s-exit(
+      | "strategoxt/syntax/java-front/lib/java/parse.str"
+      , "io-java2java-wrap"
+      , "72"
+      , "2"
+      , "73"
+      , "34"
+      )
+      ; fail
 
   io-java2java-wrap(extra-opts, s) =
-    io-stream-wrap(extra-opts, io-java2java(s))
+    s-enter(
+    | "strategoxt/syntax/java-front/lib/java/parse.str"
+    , "io-java2java-wrap"
+    , "75"
+    , "2"
+    , "76"
+    , "46"
+    )
+    ; s-step(
+      | "strategoxt/syntax/java-front/lib/java/parse.str"
+      , "76"
+      , "4"
+      , "76"
+      , "46"
+      )
+    ; io-stream-wrap(
+        s-step(
+        | "strategoxt/syntax/java-front/lib/java/parse.str"
+        , "76"
+        , "19"
+        , "76"
+        , "28"
+        )
+        ; extra-opts
+      , s-step(
+        | "strategoxt/syntax/java-front/lib/java/parse.str"
+        , "76"
+        , "31"
+        , "76"
+        , "45"
+        )
+        ; io-java2java(
+            s-step(
+            | "strategoxt/syntax/java-front/lib/java/parse.str"
+            , "76"
+            , "44"
+            , "76"
+            , "44"
+            )
+            ; s
+          )
+      )
+    < s-exit(
+      | "strategoxt/syntax/java-front/lib/java/parse.str"
+      , "io-java2java-wrap"
+      , "75"
+      , "2"
+      , "76"
+      , "46"
+      )
+    + s-exit(
+      | "strategoxt/syntax/java-front/lib/java/parse.str"
+      , "io-java2java-wrap"
+      , "75"
+      , "2"
+      , "76"
+      , "46"
+      )
+      ; fail
 
   io-java2java-wrap(extra-opts, usage, about, s) =
-    io-stream-wrap(extra-opts, usage, about, io-java2java(s))
+    s-enter(
+    | "strategoxt/syntax/java-front/lib/java/parse.str"
+    , "io-java2java-wrap"
+    , "78"
+    , "2"
+    , "79"
+    , "60"
+    )
+    ; s-step(
+      | "strategoxt/syntax/java-front/lib/java/parse.str"
+      , "79"
+      , "4"
+      , "79"
+      , "60"
+      )
+    ; io-stream-wrap(
+        s-step(
+        | "strategoxt/syntax/java-front/lib/java/parse.str"
+        , "79"
+        , "19"
+        , "79"
+        , "28"
+        )
+        ; extra-opts
+      , s-step(
+        | "strategoxt/syntax/java-front/lib/java/parse.str"
+        , "79"
+        , "31"
+        , "79"
+        , "35"
+        )
+        ; usage
+      , s-step(
+        | "strategoxt/syntax/java-front/lib/java/parse.str"
+        , "79"
+        , "38"
+        , "79"
+        , "42"
+        )
+        ; about
+      , s-step(
+        | "strategoxt/syntax/java-front/lib/java/parse.str"
+        , "79"
+        , "45"
+        , "79"
+        , "59"
+        )
+        ; io-java2java(
+            s-step(
+            | "strategoxt/syntax/java-front/lib/java/parse.str"
+            , "79"
+            , "58"
+            , "79"
+            , "58"
+            )
+            ; s
+          )
+      )
+    < s-exit(
+      | "strategoxt/syntax/java-front/lib/java/parse.str"
+      , "io-java2java-wrap"
+      , "78"
+      , "2"
+      , "79"
+      , "60"
+      )
+    + s-exit(
+      | "strategoxt/syntax/java-front/lib/java/parse.str"
+      , "io-java2java-wrap"
+      , "78"
+      , "2"
+      , "79"
+      , "60"
+      )
+      ; fail
+
 
 strategies
-
-  /**
-   * Strategy for use in io-stream-wrap.
-   *
-   * @type (Stream, Stream) -> Stream
-   */
   io-java2java(s) =
-    io-java2java(s | "CompilationUnit")
+    s-enter(
+    | "strategoxt/syntax/java-front/lib/java/parse.str"
+    , "io-java2java"
+    , "88"
+    , "2"
+    , "89"
+    , "38"
+    )
+    ; s-step(
+      | "strategoxt/syntax/java-front/lib/java/parse.str"
+      , "89"
+      , "4"
+      , "89"
+      , "38"
+      )
+    ; io-java2java(
+        s-step(
+        | "strategoxt/syntax/java-front/lib/java/parse.str"
+        , "89"
+        , "17"
+        , "89"
+        , "17"
+        )
+        ; s
+      | "CompilationUnit"
+      )
+    < s-exit(
+      | "strategoxt/syntax/java-front/lib/java/parse.str"
+      , "io-java2java"
+      , "88"
+      , "2"
+      , "89"
+      , "38"
+      )
+    + s-exit(
+      | "strategoxt/syntax/java-front/lib/java/parse.str"
+      , "io-java2java"
+      , "88"
+      , "2"
+      , "89"
+      , "38"
+      )
+      ; fail
 
-  /**
-   * Strategy for use in io-stream-wrap.
-   *
-   * @type (Stream, Stream) -> Stream
-   */
-  io-java2java(s | sort) =
-    ?(<id>, fout)
-    ; parse-java-stream(|sort, <get-config <+ !stdin()> "-i")
-    ; s
-    ; pp-java-stream(|fout)
-    ; <fputs> ("\n", fout)
+  io-java2java(s|sort) =
+    s-enter(
+    | "strategoxt/syntax/java-front/lib/java/parse.str"
+    , "io-java2java"
+    , "96"
+    , "2"
+    , "101"
+    , "25"
+    )
+    ; s-step(
+      | "strategoxt/syntax/java-front/lib/java/parse.str"
+      , "97"
+      , "4"
+      , "101"
+      , "25"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/java-front/lib/java/parse.str"
+       , "97"
+       , "4"
+       , "97"
+       , "16"
+       )
+       ; ?( <s-step(
+             | "strategoxt/syntax/java-front/lib/java/parse.str"
+             , "97"
+             , "7"
+             , "97"
+             , "8"
+             )
+             ; id>
+          , fout
+          ))
+    ; s-step(
+      | "strategoxt/syntax/java-front/lib/java/parse.str"
+      , "98"
+      , "6"
+      , "101"
+      , "25"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/java-front/lib/java/parse.str"
+       , "98"
+       , "6"
+       , "98"
+       , "60"
+       )
+       ; parse-java-stream(
+         | sort
+         , <s-step(
+            | "strategoxt/syntax/java-front/lib/java/parse.str"
+            , "98"
+            , "32"
+            , "98"
+            , "53"
+            )
+            ; (s-step(
+               | "strategoxt/syntax/java-front/lib/java/parse.str"
+               , "98"
+               , "32"
+               , "98"
+               , "41"
+               )
+               ; get-config
+               <+ s-step(
+                  | "strategoxt/syntax/java-front/lib/java/parse.str"
+                  , "98"
+                  , "46"
+                  , "98"
+                  , "53"
+                  )
+                  ; !stdin())> "-i"
+         ))
+    ; s-step(
+      | "strategoxt/syntax/java-front/lib/java/parse.str"
+      , "99"
+      , "6"
+      , "101"
+      , "25"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/java-front/lib/java/parse.str"
+       , "99"
+       , "6"
+       , "99"
+       , "6"
+       )
+       ; s)
+    ; s-step(
+      | "strategoxt/syntax/java-front/lib/java/parse.str"
+      , "100"
+      , "6"
+      , "101"
+      , "25"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/java-front/lib/java/parse.str"
+       , "100"
+       , "6"
+       , "100"
+       , "26"
+       )
+       ; pp-java-stream(|fout))
+    ; s-step(
+      | "strategoxt/syntax/java-front/lib/java/parse.str"
+      , "101"
+      , "6"
+      , "101"
+      , "25"
+      )
+    ; <(s-step(
+        | "strategoxt/syntax/java-front/lib/java/parse.str"
+        , "101"
+        , "7"
+        , "101"
+        , "11"
+        )
+        ; fputs)> ("\n", fout)
+    < s-exit(
+      | "strategoxt/syntax/java-front/lib/java/parse.str"
+      , "io-java2java"
+      , "96"
+      , "2"
+      , "101"
+      , "25"
+      )
+    + s-exit(
+      | "strategoxt/syntax/java-front/lib/java/parse.str"
+      , "io-java2java"
+      , "96"
+      , "2"
+      , "101"
+      , "25"
+      )
+      ; fail
 
-/**
- * Access to Java parse tables.
- */
+
 strategies
-
-  /**
-   * Returns an open parse table for the given sort.
-   *
-   * @type Sort -> OpenParseTable
-   */
   get-java-parse-table =
-    if ?"CompilationUnit" then
-      <jfr-memo-open-parse-table(import-term(JavaCompilationUnit-15.tbl))> "JavaCompilationUnit-15.tbl"
-    else
-      <jfr-memo-open-parse-table(import-term(Java-15.tbl))> "Java-15.tbl"
-    end
+    s-enter(
+    | "strategoxt/syntax/java-front/lib/java/parse.str"
+    , "get-java-parse-table"
+    , "113"
+    , "2"
+    , "118"
+    , "6"
+    )
+    ; s-step(
+      | "strategoxt/syntax/java-front/lib/java/parse.str"
+      , "114"
+      , "4"
+      , "118"
+      , "6"
+      )
+    ; if s-step(
+         | "strategoxt/syntax/java-front/lib/java/parse.str"
+         , "114"
+         , "7"
+         , "114"
+         , "24"
+         )
+         ; ?"CompilationUnit" then
+        s-step(
+        | "strategoxt/syntax/java-front/lib/java/parse.str"
+        , "115"
+        , "6"
+        , "115"
+        , "102"
+        )
+        ; <(s-step(
+            | "strategoxt/syntax/java-front/lib/java/parse.str"
+            , "115"
+            , "7"
+            , "115"
+            , "72"
+            )
+            ; jfr-memo-open-parse-table(
+                s-step(
+                | "strategoxt/syntax/java-front/lib/java/parse.str"
+                , "115"
+                , "33"
+                , "115"
+                , "71"
+                )
+                ; import-term(JavaCompilationUnit-15.tbl)
+              ))> "JavaCompilationUnit-15.tbl"
+      else
+        s-step(
+        | "strategoxt/syntax/java-front/lib/java/parse.str"
+        , "117"
+        , "6"
+        , "117"
+        , "72"
+        )
+        ; <(s-step(
+            | "strategoxt/syntax/java-front/lib/java/parse.str"
+            , "117"
+            , "7"
+            , "117"
+            , "57"
+            )
+            ; jfr-memo-open-parse-table(
+                s-step(
+                | "strategoxt/syntax/java-front/lib/java/parse.str"
+                , "117"
+                , "33"
+                , "117"
+                , "56"
+                )
+                ; import-term(Java-15.tbl)
+              ))> "Java-15.tbl"
+      end
+    < s-exit(
+      | "strategoxt/syntax/java-front/lib/java/parse.str"
+      , "get-java-parse-table"
+      , "113"
+      , "2"
+      , "118"
+      , "6"
+      )
+    + s-exit(
+      | "strategoxt/syntax/java-front/lib/java/parse.str"
+      , "get-java-parse-table"
+      , "113"
+      , "2"
+      , "118"
+      , "6"
+      )
+      ; fail
 
-  /**
-   * @todo Maybe this should be in libstratego-sglr
-   */
   jfr-memo-open-parse-table(gettbl) =
-    jfr-MemoParseTable
-    <+ ?key
-       ; gettbl
-       ; tbl := <open-parse-table>
-       ; rules(jfr-MemoParseTable : key -> tbl)
+    s-enter(
+    | "strategoxt/syntax/java-front/lib/java/parse.str"
+    , "jfr-memo-open-parse-table"
+    , "123"
+    , "2"
+    , "128"
+    , "46"
+    )
+    ; s-step(
+      | "strategoxt/syntax/java-front/lib/java/parse.str"
+      , "124"
+      , "4"
+      , "128"
+      , "46"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/java-front/lib/java/parse.str"
+       , "124"
+       , "4"
+       , "124"
+       , "21"
+       )
+       ; jfr-MemoParseTable
+       <+ s-step(
+          | "strategoxt/syntax/java-front/lib/java/parse.str"
+          , "125"
+          , "7"
+          , "128"
+          , "46"
+          )
+          ; (s-step(
+             | "strategoxt/syntax/java-front/lib/java/parse.str"
+             , "125"
+             , "7"
+             , "125"
+             , "10"
+             )
+             ; ?key)
+          ; s-step(
+            | "strategoxt/syntax/java-front/lib/java/parse.str"
+            , "126"
+            , "9"
+            , "128"
+            , "46"
+            )
+          ; (s-step(
+             | "strategoxt/syntax/java-front/lib/java/parse.str"
+             , "126"
+             , "9"
+             , "126"
+             , "14"
+             )
+             ; gettbl)
+          ; s-step(
+            | "strategoxt/syntax/java-front/lib/java/parse.str"
+            , "127"
+            , "9"
+            , "128"
+            , "46"
+            )
+          ; (s-step(
+             | "strategoxt/syntax/java-front/lib/java/parse.str"
+             , "127"
+             , "9"
+             , "127"
+             , "33"
+             )
+             ; tbl := <s-step(
+                       | "strategoxt/syntax/java-front/lib/java/parse.str"
+                       , "127"
+                       , "17"
+                       , "127"
+                       , "32"
+                       )
+                       ; open-parse-table>)
+          ; s-step(
+            | "strategoxt/syntax/java-front/lib/java/parse.str"
+            , "128"
+            , "9"
+            , "128"
+            , "46"
+            )
+          ; rules ( jfr-MemoParseTable :
+                      key -> tbl ))
+    < s-exit(
+      | "strategoxt/syntax/java-front/lib/java/parse.str"
+      , "jfr-memo-open-parse-table"
+      , "123"
+      , "2"
+      , "128"
+      , "46"
+      )
+    + s-exit(
+      | "strategoxt/syntax/java-front/lib/java/parse.str"
+      , "jfr-memo-open-parse-table"
+      , "123"
+      , "2"
+      , "128"
+      , "46"
+      )
+      ; fail

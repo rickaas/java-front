@@ -1,9 +1,55 @@
 module jtree15-to-abox
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 imports
   libstratego-lib
   libjava-front
 
-strategies
 
-  main-jtree15-to-abox = 
-    io-wrap(pp-java5-to-abox)
+strategies
+  main-jtree15-to-abox =
+    s-enter(
+    | "strategoxt/syntax/java-front/tools/jtree15-to-abox.str"
+    , "main-jtree15-to-abox"
+    , "8"
+    , "2"
+    , "9"
+    , "28"
+    )
+    ; s-step(
+      | "strategoxt/syntax/java-front/tools/jtree15-to-abox.str"
+      , "9"
+      , "4"
+      , "9"
+      , "28"
+      )
+    ; io-wrap(
+        s-step(
+        | "strategoxt/syntax/java-front/tools/jtree15-to-abox.str"
+        , "9"
+        , "12"
+        , "9"
+        , "27"
+        )
+        ; pp-java5-to-abox
+      )
+    < s-exit(
+      | "strategoxt/syntax/java-front/tools/jtree15-to-abox.str"
+      , "main-jtree15-to-abox"
+      , "8"
+      , "2"
+      , "9"
+      , "28"
+      )
+    + s-exit(
+      | "strategoxt/syntax/java-front/tools/jtree15-to-abox.str"
+      , "main-jtree15-to-abox"
+      , "8"
+      , "2"
+      , "9"
+      , "28"
+      )
+      ; fail

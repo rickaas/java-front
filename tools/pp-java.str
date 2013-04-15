@@ -1,43 +1,270 @@
 module pp-java
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 imports
   libstratego-lib
   libjava-front
   libstratego-tool-doc
 
-strategies
 
+strategies
   main-pp-java =
-    io-stream-wrap(
-      fail
-    , pp-java-usage
-    , pp-java-about
-    , pp-java <+ report-failure-no-trace
+    s-enter(
+    | "strategoxt/syntax/java-front/tools/pp-java.str"
+    , "main-pp-java"
+    , "9"
+    , "2"
+    , "15"
+    , "4"
     )
+    ; s-step(
+      | "strategoxt/syntax/java-front/tools/pp-java.str"
+      , "10"
+      , "4"
+      , "15"
+      , "4"
+      )
+    ; io-stream-wrap(
+        s-step(
+        | "strategoxt/syntax/java-front/tools/pp-java.str"
+        , "11"
+        , "6"
+        , "11"
+        , "9"
+        )
+        ; fail
+      , s-step(
+        | "strategoxt/syntax/java-front/tools/pp-java.str"
+        , "12"
+        , "6"
+        , "12"
+        , "18"
+        )
+        ; pp-java-usage
+      , s-step(
+        | "strategoxt/syntax/java-front/tools/pp-java.str"
+        , "13"
+        , "6"
+        , "13"
+        , "18"
+        )
+        ; pp-java-about
+      , s-step(
+        | "strategoxt/syntax/java-front/tools/pp-java.str"
+        , "14"
+        , "6"
+        , "14"
+        , "39"
+        )
+        ; (s-step(
+           | "strategoxt/syntax/java-front/tools/pp-java.str"
+           , "14"
+           , "6"
+           , "14"
+           , "12"
+           )
+           ; pp-java
+           <+ s-step(
+              | "strategoxt/syntax/java-front/tools/pp-java.str"
+              , "14"
+              , "17"
+              , "14"
+              , "39"
+              )
+              ; report-failure-no-trace)
+      )
+    < s-exit(
+      | "strategoxt/syntax/java-front/tools/pp-java.str"
+      , "main-pp-java"
+      , "9"
+      , "2"
+      , "15"
+      , "4"
+      )
+    + s-exit(
+      | "strategoxt/syntax/java-front/tools/pp-java.str"
+      , "main-pp-java"
+      , "9"
+      , "2"
+      , "15"
+      , "4"
+      )
+      ; fail
 
   pp-java =
-    ?(<read-from-stream>, fout)
-    ; pp-java-stream(|fout)
-    ; <fputs> ("\n", fout)
+    s-enter(
+    | "strategoxt/syntax/java-front/tools/pp-java.str"
+    , "pp-java"
+    , "17"
+    , "2"
+    , "20"
+    , "25"
+    )
+    ; s-step(
+      | "strategoxt/syntax/java-front/tools/pp-java.str"
+      , "18"
+      , "4"
+      , "20"
+      , "25"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/java-front/tools/pp-java.str"
+       , "18"
+       , "4"
+       , "18"
+       , "30"
+       )
+       ; ?( <s-step(
+             | "strategoxt/syntax/java-front/tools/pp-java.str"
+             , "18"
+             , "7"
+             , "18"
+             , "22"
+             )
+             ; read-from-stream>
+          , fout
+          ))
+    ; s-step(
+      | "strategoxt/syntax/java-front/tools/pp-java.str"
+      , "19"
+      , "6"
+      , "20"
+      , "25"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/java-front/tools/pp-java.str"
+       , "19"
+       , "6"
+       , "19"
+       , "26"
+       )
+       ; pp-java-stream(|fout))
+    ; s-step(
+      | "strategoxt/syntax/java-front/tools/pp-java.str"
+      , "20"
+      , "6"
+      , "20"
+      , "25"
+      )
+    ; <(s-step(
+        | "strategoxt/syntax/java-front/tools/pp-java.str"
+        , "20"
+        , "7"
+        , "20"
+        , "11"
+        )
+        ; fputs)> ("\n", fout)
+    < s-exit(
+      | "strategoxt/syntax/java-front/tools/pp-java.str"
+      , "pp-java"
+      , "17"
+      , "2"
+      , "20"
+      , "25"
+      )
+    + s-exit(
+      | "strategoxt/syntax/java-front/tools/pp-java.str"
+      , "pp-java"
+      , "17"
+      , "2"
+      , "20"
+      , "25"
+      )
+      ; fail
 
-/**
- * Documentation
- */
+
 strategies
-
   pp-java-usage =
-    <tool-doc>
-      [ Usage("pp-java [OPTIONS]")
-      , Summary("Pretty-prints a Java abstract syntax tree in ATerm format to a Java source file.")
-      , OptionUsage()
-      , AutoReportBugs()
-      ]
+    s-enter(
+    | "strategoxt/syntax/java-front/tools/pp-java.str"
+    , "pp-java-usage"
+    , "27"
+    , "2"
+    , "33"
+    , "6"
+    )
+    ; s-step(
+      | "strategoxt/syntax/java-front/tools/pp-java.str"
+      , "28"
+      , "4"
+      , "33"
+      , "6"
+      )
+    ; <(s-step(
+        | "strategoxt/syntax/java-front/tools/pp-java.str"
+        , "28"
+        , "5"
+        , "28"
+        , "12"
+        )
+        ; tool-doc)> [ Usage("pp-java [OPTIONS]")
+                     , Summary("Pretty-prints a Java abstract syntax tree in ATerm format to a Java source file.")
+                     , OptionUsage()
+                     , AutoReportBugs()
+                     ]
+    < s-exit(
+      | "strategoxt/syntax/java-front/tools/pp-java.str"
+      , "pp-java-usage"
+      , "27"
+      , "2"
+      , "33"
+      , "6"
+      )
+    + s-exit(
+      | "strategoxt/syntax/java-front/tools/pp-java.str"
+      , "pp-java-usage"
+      , "27"
+      , "2"
+      , "33"
+      , "6"
+      )
+      ; fail
+
   pp-java-about =
-    <tool-doc>
-      [ AutoProgram()
-      , Author(Person("Martin Bravenboer", "martin.bravenboer@gmail.com"))
-      , GNU_LGPL("2002-2007", "Martin Bravenboer <martin.bravenboer@gmail.com>")
-      , Config([
-          DefaultXTCRepository()
-        , CurrentXTCRepository()
-        ])
-      ]
+    s-enter(
+    | "strategoxt/syntax/java-front/tools/pp-java.str"
+    , "pp-java-about"
+    , "34"
+    , "2"
+    , "43"
+    , "6"
+    )
+    ; s-step(
+      | "strategoxt/syntax/java-front/tools/pp-java.str"
+      , "35"
+      , "4"
+      , "43"
+      , "6"
+      )
+    ; <(s-step(
+        | "strategoxt/syntax/java-front/tools/pp-java.str"
+        , "35"
+        , "5"
+        , "35"
+        , "12"
+        )
+        ; tool-doc)> [ AutoProgram()
+                     , Author(Person("Martin Bravenboer", "martin.bravenboer@gmail.com"))
+                     , GNU_LGPL("2002-2007", "Martin Bravenboer <martin.bravenboer@gmail.com>")
+                     , Config([DefaultXTCRepository(), CurrentXTCRepository()])
+                     ]
+    < s-exit(
+      | "strategoxt/syntax/java-front/tools/pp-java.str"
+      , "pp-java-about"
+      , "34"
+      , "2"
+      , "43"
+      , "6"
+      )
+    + s-exit(
+      | "strategoxt/syntax/java-front/tools/pp-java.str"
+      , "pp-java-about"
+      , "34"
+      , "2"
+      , "43"
+      , "6"
+      )
+      ; fail

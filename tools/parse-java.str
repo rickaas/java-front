@@ -1,158 +1,1316 @@
-/**
- * Parses a Java source file to an abstract syntax tree.
- *
- * @author Martin Bravenboer
- */
 module parse-java
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 imports
   libstratego-lib
   libjava-front
   libstratego-sglr
   libstratego-tool-doc
 
-strategies
 
+strategies
   main-parse-java =
-    io-stream-wrap(
-      parse-java-options
-    , parse-java-usage
-    , parse-java-about
-    , parse-java <+ report-failure-no-trace
+    s-enter(
+    | "strategoxt/syntax/java-front/tools/parse-java.str"
+    , "main-parse-java"
+    , "15"
+    , "2"
+    , "21"
+    , "4"
     )
+    ; s-step(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "16"
+      , "4"
+      , "21"
+      , "4"
+      )
+    ; io-stream-wrap(
+        s-step(
+        | "strategoxt/syntax/java-front/tools/parse-java.str"
+        , "17"
+        , "6"
+        , "17"
+        , "23"
+        )
+        ; parse-java-options
+      , s-step(
+        | "strategoxt/syntax/java-front/tools/parse-java.str"
+        , "18"
+        , "6"
+        , "18"
+        , "21"
+        )
+        ; parse-java-usage
+      , s-step(
+        | "strategoxt/syntax/java-front/tools/parse-java.str"
+        , "19"
+        , "6"
+        , "19"
+        , "21"
+        )
+        ; parse-java-about
+      , s-step(
+        | "strategoxt/syntax/java-front/tools/parse-java.str"
+        , "20"
+        , "6"
+        , "20"
+        , "42"
+        )
+        ; (s-step(
+           | "strategoxt/syntax/java-front/tools/parse-java.str"
+           , "20"
+           , "6"
+           , "20"
+           , "15"
+           )
+           ; parse-java
+           <+ s-step(
+              | "strategoxt/syntax/java-front/tools/parse-java.str"
+              , "20"
+              , "20"
+              , "20"
+              , "42"
+              )
+              ; report-failure-no-trace)
+      )
+    < s-exit(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "main-parse-java"
+      , "15"
+      , "2"
+      , "21"
+      , "4"
+      )
+    + s-exit(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "main-parse-java"
+      , "15"
+      , "2"
+      , "21"
+      , "4"
+      )
+      ; fail
+
 
 strategies
-
   parse-java =
-    ?(<id>, fout)
-    ; parse-java-stream-pt(|<get-start-symbol>, <get-input-path>)
-    ; if must-preserve-comments then
-        asfix-anno-comments(|["Comment"])
+    s-enter(
+    | "strategoxt/syntax/java-front/tools/parse-java.str"
+    , "parse-java"
+    , "25"
+    , "2"
+    , "40"
+    , "8"
+    )
+    ; s-step(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "26"
+      , "4"
+      , "40"
+      , "8"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/java-front/tools/parse-java.str"
+       , "26"
+       , "4"
+       , "26"
+       , "16"
+       )
+       ; ?( <s-step(
+             | "strategoxt/syntax/java-front/tools/parse-java.str"
+             , "26"
+             , "7"
+             , "26"
+             , "8"
+             )
+             ; id>
+          , fout
+          ))
+    ; s-step(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "27"
+      , "6"
+      , "40"
+      , "8"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/java-front/tools/parse-java.str"
+       , "27"
+       , "6"
+       , "27"
+       , "64"
+       )
+       ; parse-java-stream-pt(
+         | <s-step(
+            | "strategoxt/syntax/java-front/tools/parse-java.str"
+            , "27"
+            , "29"
+            , "27"
+            , "44"
+            )
+            ; get-start-symbol>
+         , <s-step(
+            | "strategoxt/syntax/java-front/tools/parse-java.str"
+            , "27"
+            , "49"
+            , "27"
+            , "62"
+            )
+            ; get-input-path>
+         ))
+    ; s-step(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "28"
+      , "6"
+      , "40"
+      , "8"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/java-front/tools/parse-java.str"
+       , "28"
+       , "6"
+       , "30"
+       , "8"
+       )
+       ; if s-step(
+            | "strategoxt/syntax/java-front/tools/parse-java.str"
+            , "28"
+            , "9"
+            , "28"
+            , "30"
+            )
+            ; must-preserve-comments then
+           s-step(
+           | "strategoxt/syntax/java-front/tools/parse-java.str"
+           , "29"
+           , "8"
+           , "29"
+           , "40"
+           )
+           ; asfix-anno-comments(|["Comment"])
+         end)
+    ; s-step(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "31"
+      , "6"
+      , "40"
+      , "8"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/java-front/tools/parse-java.str"
+       , "31"
+       , "6"
+       , "33"
+       , "8"
+       )
+       ; if s-step(
+            | "strategoxt/syntax/java-front/tools/parse-java.str"
+            , "31"
+            , "9"
+            , "31"
+            , "31"
+            )
+            ; must-preserve-positions then
+           s-step(
+           | "strategoxt/syntax/java-front/tools/parse-java.str"
+           , "32"
+           , "8"
+           , "32"
+           , "36"
+           )
+           ; asfix-anno-position-info(|"")
+         end)
+    ; s-step(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "34"
+      , "6"
+      , "40"
+      , "8"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/java-front/tools/parse-java.str"
+       , "34"
+       , "6"
+       , "34"
+       , "18"
+       )
+       ; implode-asfix)
+    ; s-step(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "35"
+      , "6"
+      , "40"
+      , "8"
+      )
+    ; if s-step(
+         | "strategoxt/syntax/java-front/tools/parse-java.str"
+         , "35"
+         , "9"
+         , "35"
+         , "25"
+         )
+         ; <(s-step(
+             | "strategoxt/syntax/java-front/tools/parse-java.str"
+             , "35"
+             , "10"
+             , "35"
+             , "19"
+             )
+             ; get-config)> "-b" then
+        s-step(
+        | "strategoxt/syntax/java-front/tools/parse-java.str"
+        , "36"
+        , "8"
+        , "36"
+        , "44"
+        )
+        ; <(s-step(
+            | "strategoxt/syntax/java-front/tools/parse-java.str"
+            , "36"
+            , "9"
+            , "36"
+            , "30"
+            )
+            ; write-in-baf-to-stream)> ( fout
+                                       , <s-step(
+                                          | "strategoxt/syntax/java-front/tools/parse-java.str"
+                                          , "36"
+                                          , "41"
+                                          , "36"
+                                          , "42"
+                                          )
+                                          ; id>
+                                       )
+      else
+        s-step(
+        | "strategoxt/syntax/java-front/tools/parse-java.str"
+        , "38"
+        , "8"
+        , "39"
+        , "29"
+        )
+        ; (s-step(
+           | "strategoxt/syntax/java-front/tools/parse-java.str"
+           , "38"
+           , "8"
+           , "38"
+           , "45"
+           )
+           ; <(s-step(
+               | "strategoxt/syntax/java-front/tools/parse-java.str"
+               , "38"
+               , "9"
+               , "38"
+               , "31"
+               )
+               ; write-in-text-to-stream)> ( fout
+                                           , <s-step(
+                                              | "strategoxt/syntax/java-front/tools/parse-java.str"
+                                              , "38"
+                                              , "42"
+                                              , "38"
+                                              , "43"
+                                              )
+                                              ; id>
+                                           ))
+        ; s-step(
+          | "strategoxt/syntax/java-front/tools/parse-java.str"
+          , "39"
+          , "10"
+          , "39"
+          , "29"
+          )
+        ; <(s-step(
+            | "strategoxt/syntax/java-front/tools/parse-java.str"
+            , "39"
+            , "11"
+            , "39"
+            , "15"
+            )
+            ; fputc)> ('\n', fout)
       end
-    ; if must-preserve-positions then
-        asfix-anno-position-info(|"")
-      end
-    ; implode-asfix
-    ; if <get-config> "-b" then
-        <write-in-baf-to-stream> (fout, <id>)
-      else 
-        <write-in-text-to-stream> (fout, <id>)
-        ; <fputc> ('\n', fout)
-      end
+    < s-exit(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "parse-java"
+      , "25"
+      , "2"
+      , "40"
+      , "8"
+      )
+    + s-exit(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "parse-java"
+      , "25"
+      , "2"
+      , "40"
+      , "8"
+      )
+      ; fail
 
   get-input-path =
-    <get-config> "-i" <+ !"stdin"
-
-/**
- * Options
- */
-strategies
-
-  parse-java-options =
-    release-option(|"Parse source")
-    + symbol-option
-    + preserve-comments-option
-    + preserve-positions-option
-
-/**
- * Options: Start symbol
- */
-strategies
-
-  symbol-option =
-    ArgOption("-s" + "--start-symbol"
-    , set-start-symbol
-    , !HelpString("-s|--start-symbol s", "Start parsing with symbol s [CompilationUnit]")
+    s-enter(
+    | "strategoxt/syntax/java-front/tools/parse-java.str"
+    , "get-input-path"
+    , "42"
+    , "2"
+    , "43"
+    , "32"
     )
+    ; s-step(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "43"
+      , "4"
+      , "43"
+      , "32"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/java-front/tools/parse-java.str"
+       , "43"
+       , "4"
+       , "43"
+       , "20"
+       )
+       ; <(s-step(
+           | "strategoxt/syntax/java-front/tools/parse-java.str"
+           , "43"
+           , "5"
+           , "43"
+           , "14"
+           )
+           ; get-config)> "-i"
+       <+ s-step(
+          | "strategoxt/syntax/java-front/tools/parse-java.str"
+          , "43"
+          , "25"
+          , "43"
+          , "32"
+          )
+          ; !"stdin")
+    < s-exit(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "get-input-path"
+      , "42"
+      , "2"
+      , "43"
+      , "32"
+      )
+    + s-exit(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "get-input-path"
+      , "42"
+      , "2"
+      , "43"
+      , "32"
+      )
+      ; fail
+
+
+strategies
+  parse-java-options =
+    s-enter(
+    | "strategoxt/syntax/java-front/tools/parse-java.str"
+    , "parse-java-options"
+    , "50"
+    , "2"
+    , "54"
+    , "30"
+    )
+    ; s-step(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "51"
+      , "4"
+      , "54"
+      , "30"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/java-front/tools/parse-java.str"
+       , "51"
+       , "4"
+       , "51"
+       , "34"
+       )
+       ; release-option(|"Parse source")
+       + s-step(
+         | "strategoxt/syntax/java-front/tools/parse-java.str"
+         , "52"
+         , "6"
+         , "54"
+         , "30"
+         )
+         ; (s-step(
+            | "strategoxt/syntax/java-front/tools/parse-java.str"
+            , "52"
+            , "6"
+            , "52"
+            , "18"
+            )
+            ; symbol-option
+            + s-step(
+              | "strategoxt/syntax/java-front/tools/parse-java.str"
+              , "53"
+              , "6"
+              , "54"
+              , "30"
+              )
+              ; (s-step(
+                 | "strategoxt/syntax/java-front/tools/parse-java.str"
+                 , "53"
+                 , "6"
+                 , "53"
+                 , "29"
+                 )
+                 ; preserve-comments-option
+                 + s-step(
+                   | "strategoxt/syntax/java-front/tools/parse-java.str"
+                   , "54"
+                   , "6"
+                   , "54"
+                   , "30"
+                   )
+                   ; preserve-positions-option)))
+    < s-exit(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "parse-java-options"
+      , "50"
+      , "2"
+      , "54"
+      , "30"
+      )
+    + s-exit(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "parse-java-options"
+      , "50"
+      , "2"
+      , "54"
+      , "30"
+      )
+      ; fail
+
+
+strategies
+  symbol-option =
+    s-enter(
+    | "strategoxt/syntax/java-front/tools/parse-java.str"
+    , "symbol-option"
+    , "61"
+    , "2"
+    , "65"
+    , "4"
+    )
+    ; s-step(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "62"
+      , "4"
+      , "65"
+      , "4"
+      )
+    ; ArgOption(
+        s-step(
+        | "strategoxt/syntax/java-front/tools/parse-java.str"
+        , "62"
+        , "14"
+        , "62"
+        , "36"
+        )
+        ; (s-step(
+           | "strategoxt/syntax/java-front/tools/parse-java.str"
+           , "62"
+           , "14"
+           , "62"
+           , "17"
+           )
+           ; "-s"
+           + s-step(
+             | "strategoxt/syntax/java-front/tools/parse-java.str"
+             , "62"
+             , "21"
+             , "62"
+             , "36"
+             )
+             ; "--start-symbol")
+      , s-step(
+        | "strategoxt/syntax/java-front/tools/parse-java.str"
+        , "63"
+        , "6"
+        , "63"
+        , "21"
+        )
+        ; set-start-symbol
+      , s-step(
+        | "strategoxt/syntax/java-front/tools/parse-java.str"
+        , "64"
+        , "6"
+        , "64"
+        , "88"
+        )
+        ; !HelpString("-s|--start-symbol s", "Start parsing with symbol s [CompilationUnit]")
+      )
+    < s-exit(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "symbol-option"
+      , "61"
+      , "2"
+      , "65"
+      , "4"
+      )
+    + s-exit(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "symbol-option"
+      , "61"
+      , "2"
+      , "65"
+      , "4"
+      )
+      ; fail
 
   set-start-symbol =
-    <set-config> ("start-symbol", <id>)
-
-  get-start-symbol = 
-    <get-config> "start-symbol" <+ !"CompilationUnit"
-
-/**
- * Options: Comment preservation
- */
-strategies
-
-  preserve-comments-option =
-    Option("--preserve-comments"
-    , <set-preserve-comments> "yes"
-    , !HelpString("--preserve-comments", "Preserve source code
-            comments as annotations of the abstract syntax tree. [off]")
+    s-enter(
+    | "strategoxt/syntax/java-front/tools/parse-java.str"
+    , "set-start-symbol"
+    , "67"
+    , "2"
+    , "68"
+    , "38"
     )
+    ; s-step(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "68"
+      , "4"
+      , "68"
+      , "38"
+      )
+    ; <(s-step(
+        | "strategoxt/syntax/java-front/tools/parse-java.str"
+        , "68"
+        , "5"
+        , "68"
+        , "14"
+        )
+        ; set-config)> ( "start-symbol"
+                       , <s-step(
+                          | "strategoxt/syntax/java-front/tools/parse-java.str"
+                          , "68"
+                          , "35"
+                          , "68"
+                          , "36"
+                          )
+                          ; id>
+                       )
+    < s-exit(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "set-start-symbol"
+      , "67"
+      , "2"
+      , "68"
+      , "38"
+      )
+    + s-exit(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "set-start-symbol"
+      , "67"
+      , "2"
+      , "68"
+      , "38"
+      )
+      ; fail
+
+  get-start-symbol =
+    s-enter(
+    | "strategoxt/syntax/java-front/tools/parse-java.str"
+    , "get-start-symbol"
+    , "70"
+    , "2"
+    , "71"
+    , "52"
+    )
+    ; s-step(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "71"
+      , "4"
+      , "71"
+      , "52"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/java-front/tools/parse-java.str"
+       , "71"
+       , "4"
+       , "71"
+       , "30"
+       )
+       ; <(s-step(
+           | "strategoxt/syntax/java-front/tools/parse-java.str"
+           , "71"
+           , "5"
+           , "71"
+           , "14"
+           )
+           ; get-config)> "start-symbol"
+       <+ s-step(
+          | "strategoxt/syntax/java-front/tools/parse-java.str"
+          , "71"
+          , "35"
+          , "71"
+          , "52"
+          )
+          ; !"CompilationUnit")
+    < s-exit(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "get-start-symbol"
+      , "70"
+      , "2"
+      , "71"
+      , "52"
+      )
+    + s-exit(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "get-start-symbol"
+      , "70"
+      , "2"
+      , "71"
+      , "52"
+      )
+      ; fail
+
+
+strategies
+  preserve-comments-option =
+    s-enter(
+    | "strategoxt/syntax/java-front/tools/parse-java.str"
+    , "preserve-comments-option"
+    , "78"
+    , "2"
+    , "83"
+    , "4"
+    )
+    ; s-step(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "79"
+      , "4"
+      , "83"
+      , "4"
+      )
+    ; Option(
+        s-step(
+        | "strategoxt/syntax/java-front/tools/parse-java.str"
+        , "79"
+        , "11"
+        , "79"
+        , "31"
+        )
+        ; "--preserve-comments"
+      , s-step(
+        | "strategoxt/syntax/java-front/tools/parse-java.str"
+        , "80"
+        , "6"
+        , "80"
+        , "34"
+        )
+        ; <(s-step(
+            | "strategoxt/syntax/java-front/tools/parse-java.str"
+            , "80"
+            , "7"
+            , "80"
+            , "27"
+            )
+            ; set-preserve-comments)> "yes"
+      , s-step(
+        | "strategoxt/syntax/java-front/tools/parse-java.str"
+        , "81"
+        , "6"
+        , "82"
+        , "71"
+        )
+        ; !HelpString("--preserve-comments", "Preserve source code
+            comments as annotations of the abstract syntax tree. [off]")
+      )
+    < s-exit(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "preserve-comments-option"
+      , "78"
+      , "2"
+      , "83"
+      , "4"
+      )
+    + s-exit(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "preserve-comments-option"
+      , "78"
+      , "2"
+      , "83"
+      , "4"
+      )
+      ; fail
 
   set-preserve-comments =
-    <set-config> ("preserve-comments", <id>)
+    s-enter(
+    | "strategoxt/syntax/java-front/tools/parse-java.str"
+    , "set-preserve-comments"
+    , "85"
+    , "2"
+    , "86"
+    , "43"
+    )
+    ; s-step(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "86"
+      , "4"
+      , "86"
+      , "43"
+      )
+    ; <(s-step(
+        | "strategoxt/syntax/java-front/tools/parse-java.str"
+        , "86"
+        , "5"
+        , "86"
+        , "14"
+        )
+        ; set-config)> ( "preserve-comments"
+                       , <s-step(
+                          | "strategoxt/syntax/java-front/tools/parse-java.str"
+                          , "86"
+                          , "40"
+                          , "86"
+                          , "41"
+                          )
+                          ; id>
+                       )
+    < s-exit(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "set-preserve-comments"
+      , "85"
+      , "2"
+      , "86"
+      , "43"
+      )
+    + s-exit(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "set-preserve-comments"
+      , "85"
+      , "2"
+      , "86"
+      , "43"
+      )
+      ; fail
 
   must-preserve-comments =
-    <get-config> "preserve-comments" => "yes"
-
-/**
- * Options: Position preservation
- */
-strategies
-
-  preserve-positions-option =
-    Option("--preserve-positions"
-    , <set-preserve-positions> "yes"
-    , !HelpString("--preserve-positions", "Preserve source code positions in the
-                   input file as annotations of the abstract syntax tree. [off]")
+    s-enter(
+    | "strategoxt/syntax/java-front/tools/parse-java.str"
+    , "must-preserve-comments"
+    , "88"
+    , "2"
+    , "89"
+    , "44"
     )
+    ; s-step(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "89"
+      , "4"
+      , "89"
+      , "44"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/java-front/tools/parse-java.str"
+       , "89"
+       , "4"
+       , "89"
+       , "35"
+       )
+       ; <(s-step(
+           | "strategoxt/syntax/java-front/tools/parse-java.str"
+           , "89"
+           , "5"
+           , "89"
+           , "14"
+           )
+           ; get-config)> "preserve-comments") => "yes"
+    < s-exit(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "must-preserve-comments"
+      , "88"
+      , "2"
+      , "89"
+      , "44"
+      )
+    + s-exit(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "must-preserve-comments"
+      , "88"
+      , "2"
+      , "89"
+      , "44"
+      )
+      ; fail
+
+
+strategies
+  preserve-positions-option =
+    s-enter(
+    | "strategoxt/syntax/java-front/tools/parse-java.str"
+    , "preserve-positions-option"
+    , "96"
+    , "2"
+    , "101"
+    , "4"
+    )
+    ; s-step(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "97"
+      , "4"
+      , "101"
+      , "4"
+      )
+    ; Option(
+        s-step(
+        | "strategoxt/syntax/java-front/tools/parse-java.str"
+        , "97"
+        , "11"
+        , "97"
+        , "32"
+        )
+        ; "--preserve-positions"
+      , s-step(
+        | "strategoxt/syntax/java-front/tools/parse-java.str"
+        , "98"
+        , "6"
+        , "98"
+        , "35"
+        )
+        ; <(s-step(
+            | "strategoxt/syntax/java-front/tools/parse-java.str"
+            , "98"
+            , "7"
+            , "98"
+            , "28"
+            )
+            ; set-preserve-positions)> "yes"
+      , s-step(
+        | "strategoxt/syntax/java-front/tools/parse-java.str"
+        , "99"
+        , "6"
+        , "100"
+        , "80"
+        )
+        ; !HelpString("--preserve-positions", "Preserve source code positions in the
+                   input file as annotations of the abstract syntax tree. [off]")
+      )
+    < s-exit(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "preserve-positions-option"
+      , "96"
+      , "2"
+      , "101"
+      , "4"
+      )
+    + s-exit(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "preserve-positions-option"
+      , "96"
+      , "2"
+      , "101"
+      , "4"
+      )
+      ; fail
 
   set-preserve-positions =
-    <set-config> ("preserve-positions", <id>)
+    s-enter(
+    | "strategoxt/syntax/java-front/tools/parse-java.str"
+    , "set-preserve-positions"
+    , "103"
+    , "2"
+    , "104"
+    , "44"
+    )
+    ; s-step(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "104"
+      , "4"
+      , "104"
+      , "44"
+      )
+    ; <(s-step(
+        | "strategoxt/syntax/java-front/tools/parse-java.str"
+        , "104"
+        , "5"
+        , "104"
+        , "14"
+        )
+        ; set-config)> ( "preserve-positions"
+                       , <s-step(
+                          | "strategoxt/syntax/java-front/tools/parse-java.str"
+                          , "104"
+                          , "41"
+                          , "104"
+                          , "42"
+                          )
+                          ; id>
+                       )
+    < s-exit(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "set-preserve-positions"
+      , "103"
+      , "2"
+      , "104"
+      , "44"
+      )
+    + s-exit(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "set-preserve-positions"
+      , "103"
+      , "2"
+      , "104"
+      , "44"
+      )
+      ; fail
 
   must-preserve-positions =
-    <get-config> "preserve-positions" => "yes"
+    s-enter(
+    | "strategoxt/syntax/java-front/tools/parse-java.str"
+    , "must-preserve-positions"
+    , "106"
+    , "2"
+    , "107"
+    , "45"
+    )
+    ; s-step(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "107"
+      , "4"
+      , "107"
+      , "45"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/java-front/tools/parse-java.str"
+       , "107"
+       , "4"
+       , "107"
+       , "36"
+       )
+       ; <(s-step(
+           | "strategoxt/syntax/java-front/tools/parse-java.str"
+           , "107"
+           , "5"
+           , "107"
+           , "14"
+           )
+           ; get-config)> "preserve-positions") => "yes"
+    < s-exit(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "must-preserve-positions"
+      , "106"
+      , "2"
+      , "107"
+      , "45"
+      )
+    + s-exit(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "must-preserve-positions"
+      , "106"
+      , "2"
+      , "107"
+      , "45"
+      )
+      ; fail
 
 
-/**
- * Options: Java release
- */
 strategies
-
-  /**
-   * Release option, just checked and ignored for now.
-   */
   release-option(|msg) =
-      ArgOption("--release"
-      , set-release-option
-      , !HelpString("--release r", <conc-strings> (msg, " for release r [1.5]"))
+    s-enter(
+    | "strategoxt/syntax/java-front/tools/parse-java.str"
+    , "release-option"
+    , "118"
+    , "2"
+    , "126"
+    , "6"
+    )
+    ; s-step(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "119"
+      , "6"
+      , "126"
+      , "6"
       )
-    + Option("-1.5"
-      , <set-release-option> "1.5"
-      , !HelpString("-1.5", <conc-strings> (msg, " as Java 2 version 1.5"))
+    ; (s-step(
+       | "strategoxt/syntax/java-front/tools/parse-java.str"
+       , "119"
+       , "6"
+       , "122"
+       , "6"
+       )
+       ; ArgOption(
+           s-step(
+           | "strategoxt/syntax/java-front/tools/parse-java.str"
+           , "119"
+           , "16"
+           , "119"
+           , "26"
+           )
+           ; "--release"
+         , s-step(
+           | "strategoxt/syntax/java-front/tools/parse-java.str"
+           , "120"
+           , "8"
+           , "120"
+           , "25"
+           )
+           ; set-release-option
+         , s-step(
+           | "strategoxt/syntax/java-front/tools/parse-java.str"
+           , "121"
+           , "8"
+           , "121"
+           , "79"
+           )
+           ; !HelpString(
+                "--release r"
+              , <s-step(
+                 | "strategoxt/syntax/java-front/tools/parse-java.str"
+                 , "121"
+                 , "36"
+                 , "121"
+                 , "47"
+                 )
+                 ; conc-strings> (msg, " for release r [1.5]")
+              )
+         )
+       + s-step(
+         | "strategoxt/syntax/java-front/tools/parse-java.str"
+         , "123"
+         , "6"
+         , "126"
+         , "6"
+         )
+         ; Option(
+             s-step(
+             | "strategoxt/syntax/java-front/tools/parse-java.str"
+             , "123"
+             , "13"
+             , "123"
+             , "18"
+             )
+             ; "-1.5"
+           , s-step(
+             | "strategoxt/syntax/java-front/tools/parse-java.str"
+             , "124"
+             , "8"
+             , "124"
+             , "33"
+             )
+             ; <(s-step(
+                 | "strategoxt/syntax/java-front/tools/parse-java.str"
+                 , "124"
+                 , "9"
+                 , "124"
+                 , "26"
+                 )
+                 ; set-release-option)> "1.5"
+           , s-step(
+             | "strategoxt/syntax/java-front/tools/parse-java.str"
+             , "125"
+             , "8"
+             , "125"
+             , "74"
+             )
+             ; !HelpString(
+                  "-1.5"
+                , <s-step(
+                   | "strategoxt/syntax/java-front/tools/parse-java.str"
+                   , "125"
+                   , "29"
+                   , "125"
+                   , "40"
+                   )
+                   ; conc-strings> (msg, " as Java 2 version 1.5")
+                )
+           ))
+    < s-exit(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "release-option"
+      , "118"
+      , "2"
+      , "126"
+      , "6"
       )
+    + s-exit(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "release-option"
+      , "118"
+      , "2"
+      , "126"
+      , "6"
+      )
+      ; fail
 
-  set-release-option = 
-    ?"1.5"
-    ; <fprint> (<stderr-stream>, ["parse-java: parsing for release ", <id>, " is not supported.\n"])
+  set-release-option =
+    s-enter(
+    | "strategoxt/syntax/java-front/tools/parse-java.str"
+    , "set-release-option"
+    , "128"
+    , "2"
+    , "130"
+    , "99"
+    )
+    ; s-step(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "129"
+      , "4"
+      , "130"
+      , "99"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/java-front/tools/parse-java.str"
+       , "129"
+       , "4"
+       , "129"
+       , "9"
+       )
+       ; ?"1.5")
+    ; s-step(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "130"
+      , "6"
+      , "130"
+      , "99"
+      )
+    ; <(s-step(
+        | "strategoxt/syntax/java-front/tools/parse-java.str"
+        , "130"
+        , "7"
+        , "130"
+        , "12"
+        )
+        ; fprint)> ( <s-step(
+                      | "strategoxt/syntax/java-front/tools/parse-java.str"
+                      , "130"
+                      , "17"
+                      , "130"
+                      , "29"
+                      )
+                      ; stderr-stream>
+                   , [ "parse-java: parsing for release "
+                     , <s-step(
+                        | "strategoxt/syntax/java-front/tools/parse-java.str"
+                        , "130"
+                        , "71"
+                        , "130"
+                        , "72"
+                        )
+                        ; id>
+                     , " is not supported.\n"
+                     ]
+                   )
+    < s-exit(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "set-release-option"
+      , "128"
+      , "2"
+      , "130"
+      , "99"
+      )
+    + s-exit(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "set-release-option"
+      , "128"
+      , "2"
+      , "130"
+      , "99"
+      )
+      ; fail
 
 
-/**
- * Documentation
- */
 strategies
-
   parse-java-usage =
-    <tool-doc>
-      [ Usage("parse-java [OPTIONS]")
-      , Summary(
-         "Parses a Java source file to an abstract syntax 
+    s-enter(
+    | "strategoxt/syntax/java-front/tools/parse-java.str"
+    , "parse-java-usage"
+    , "138"
+    , "2"
+    , "146"
+    , "6"
+    )
+    ; s-step(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "139"
+      , "4"
+      , "146"
+      , "6"
+      )
+    ; <(s-step(
+        | "strategoxt/syntax/java-front/tools/parse-java.str"
+        , "139"
+        , "5"
+        , "139"
+        , "12"
+        )
+        ; tool-doc)> [ Usage("parse-java [OPTIONS]")
+                     , Summary("Parses a Java source file to an abstract syntax 
           tree in the ATerm format.")
-      , OptionUsage()
-      , AutoReportBugs()
-      ]
+                     , OptionUsage()
+                     , AutoReportBugs()
+                     ]
+    < s-exit(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "parse-java-usage"
+      , "138"
+      , "2"
+      , "146"
+      , "6"
+      )
+    + s-exit(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "parse-java-usage"
+      , "138"
+      , "2"
+      , "146"
+      , "6"
+      )
+      ; fail
 
   parse-java-about =
-    <tool-doc>
-      [ AutoProgram()
-      , Author(Person("Martin Bravenboer", "martin.bravenboer@gmail.com"))
-      , GNU_LGPL("2002-2007", "Martin Bravenboer <martin.bravenboer@gmail.com>")
-      , Config([
-          DefaultXTCRepository()
-        , CurrentXTCRepository()
-        ])
-      ]
-
+    s-enter(
+    | "strategoxt/syntax/java-front/tools/parse-java.str"
+    , "parse-java-about"
+    , "148"
+    , "2"
+    , "157"
+    , "6"
+    )
+    ; s-step(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "149"
+      , "4"
+      , "157"
+      , "6"
+      )
+    ; <(s-step(
+        | "strategoxt/syntax/java-front/tools/parse-java.str"
+        , "149"
+        , "5"
+        , "149"
+        , "12"
+        )
+        ; tool-doc)> [ AutoProgram()
+                     , Author(Person("Martin Bravenboer", "martin.bravenboer@gmail.com"))
+                     , GNU_LGPL("2002-2007", "Martin Bravenboer <martin.bravenboer@gmail.com>")
+                     , Config([DefaultXTCRepository(), CurrentXTCRepository()])
+                     ]
+    < s-exit(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "parse-java-about"
+      , "148"
+      , "2"
+      , "157"
+      , "6"
+      )
+    + s-exit(
+      | "strategoxt/syntax/java-front/tools/parse-java.str"
+      , "parse-java-about"
+      , "148"
+      , "2"
+      , "157"
+      , "6"
+      )
+      ; fail

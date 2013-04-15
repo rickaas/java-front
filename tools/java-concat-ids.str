@@ -1,14 +1,60 @@
 module java-concat-ids
 
-imports 
-  libstrategolib  
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstrategolib
   libjava-front
 
-signature constructors
-  ConcatIds : ID -> ID
+
+signature
+  constructors
+    ConcatIds : ID -> ID
+
 
 strategies
-  
   main-java-concat-ids =
-    io-wrap(java-concat-ids)
-
+    s-enter(
+    | "strategoxt/syntax/java-front/tools/java-concat-ids.str"
+    , "main-java-concat-ids"
+    , "12"
+    , "2"
+    , "13"
+    , "27"
+    )
+    ; s-step(
+      | "strategoxt/syntax/java-front/tools/java-concat-ids.str"
+      , "13"
+      , "4"
+      , "13"
+      , "27"
+      )
+    ; io-wrap(
+        s-step(
+        | "strategoxt/syntax/java-front/tools/java-concat-ids.str"
+        , "13"
+        , "12"
+        , "13"
+        , "26"
+        )
+        ; java-concat-ids
+      )
+    < s-exit(
+      | "strategoxt/syntax/java-front/tools/java-concat-ids.str"
+      , "main-java-concat-ids"
+      , "12"
+      , "2"
+      , "13"
+      , "27"
+      )
+    + s-exit(
+      | "strategoxt/syntax/java-front/tools/java-concat-ids.str"
+      , "main-java-concat-ids"
+      , "12"
+      , "2"
+      , "13"
+      , "27"
+      )
+      ; fail

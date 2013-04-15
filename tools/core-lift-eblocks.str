@@ -1,11 +1,56 @@
 module core-lift-eblocks
+
 imports
-  libstratego-lib 
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
+imports
+  libstratego-lib
   libjava-front
   java-concat-ids
 
-strategies
-  
-  main-core-lift-eblocks =
-    io-wrap(java-lift-eblocks)
 
+strategies
+  main-core-lift-eblocks =
+    s-enter(
+    | "strategoxt/syntax/java-front/tools/core-lift-eblocks.str"
+    , "main-core-lift-eblocks"
+    , "9"
+    , "2"
+    , "10"
+    , "29"
+    )
+    ; s-step(
+      | "strategoxt/syntax/java-front/tools/core-lift-eblocks.str"
+      , "10"
+      , "4"
+      , "10"
+      , "29"
+      )
+    ; io-wrap(
+        s-step(
+        | "strategoxt/syntax/java-front/tools/core-lift-eblocks.str"
+        , "10"
+        , "12"
+        , "10"
+        , "28"
+        )
+        ; java-lift-eblocks
+      )
+    < s-exit(
+      | "strategoxt/syntax/java-front/tools/core-lift-eblocks.str"
+      , "main-core-lift-eblocks"
+      , "9"
+      , "2"
+      , "10"
+      , "29"
+      )
+    + s-exit(
+      | "strategoxt/syntax/java-front/tools/core-lift-eblocks.str"
+      , "main-core-lift-eblocks"
+      , "9"
+      , "2"
+      , "10"
+      , "29"
+      )
+      ; fail

@@ -1,40 +1,183 @@
-/**
- * Main interface for pretty-printing.
- * 
- * @author Martin Bravenboer
- */
 module java/pretty-print
+
+imports
+  org.strategoxt.imp.debuggers.stratego.runtime
+
+
 imports
   java/pp/main
 
+
 strategies
-
-  /**
-   * Pretty-prints the Java AST to a string.
-   *
-   * @type Java -> String
-   */
   pp-java-string =
-    pp-java5-to-string
+    s-enter(
+    | "strategoxt/syntax/java-front/lib/java/pretty-print.str"
+    , "pp-java-string"
+    , "17"
+    , "2"
+    , "18"
+    , "21"
+    )
+    ; s-step(
+      | "strategoxt/syntax/java-front/lib/java/pretty-print.str"
+      , "18"
+      , "4"
+      , "18"
+      , "21"
+      )
+    ; pp-java5-to-string
+    < s-exit(
+      | "strategoxt/syntax/java-front/lib/java/pretty-print.str"
+      , "pp-java-string"
+      , "17"
+      , "2"
+      , "18"
+      , "21"
+      )
+    + s-exit(
+      | "strategoxt/syntax/java-front/lib/java/pretty-print.str"
+      , "pp-java-string"
+      , "17"
+      , "2"
+      , "18"
+      , "21"
+      )
+      ; fail
 
-  /**
-   * Pretty-prints the Java AST to the Stream.
-   *
-   * @param Stream
-   * @type Java -> Stream
-   */
   pp-java-stream(|stream) =
-    pp-java-box
+    s-enter(
+    | "strategoxt/syntax/java-front/lib/java/pretty-print.str"
+    , "pp-java-stream"
+    , "26"
+    , "2"
+    , "28"
+    , "33"
+    )
+    ; s-step(
+      | "strategoxt/syntax/java-front/lib/java/pretty-print.str"
+      , "27"
+      , "4"
+      , "28"
+      , "33"
+      )
+    ; (s-step(
+       | "strategoxt/syntax/java-front/lib/java/pretty-print.str"
+       , "27"
+       , "4"
+       , "27"
+       , "14"
+       )
+       ; pp-java-box)
+    ; s-step(
+      | "strategoxt/syntax/java-front/lib/java/pretty-print.str"
+      , "28"
+      , "6"
+      , "28"
+      , "33"
+      )
     ; box2text-stream(|80, stream)
+    < s-exit(
+      | "strategoxt/syntax/java-front/lib/java/pretty-print.str"
+      , "pp-java-stream"
+      , "26"
+      , "2"
+      , "28"
+      , "33"
+      )
+    + s-exit(
+      | "strategoxt/syntax/java-front/lib/java/pretty-print.str"
+      , "pp-java-stream"
+      , "26"
+      , "2"
+      , "28"
+      , "33"
+      )
+      ; fail
 
-  /**
-   * Pretty-prints the Java AST to a Box representation.
-   *
-   * @type Java -> Box
-   */
   pp-java-box =
-    pp-java-box(fail)
+    s-enter(
+    | "strategoxt/syntax/java-front/lib/java/pretty-print.str"
+    , "pp-java-box"
+    , "35"
+    , "2"
+    , "36"
+    , "20"
+    )
+    ; s-step(
+      | "strategoxt/syntax/java-front/lib/java/pretty-print.str"
+      , "36"
+      , "4"
+      , "36"
+      , "20"
+      )
+    ; pp-java-box(
+        s-step(
+        | "strategoxt/syntax/java-front/lib/java/pretty-print.str"
+        , "36"
+        , "16"
+        , "36"
+        , "19"
+        )
+        ; fail
+      )
+    < s-exit(
+      | "strategoxt/syntax/java-front/lib/java/pretty-print.str"
+      , "pp-java-box"
+      , "35"
+      , "2"
+      , "36"
+      , "20"
+      )
+    + s-exit(
+      | "strategoxt/syntax/java-front/lib/java/pretty-print.str"
+      , "pp-java-box"
+      , "35"
+      , "2"
+      , "36"
+      , "20"
+      )
+      ; fail
 
   pp-java-box(extension) =
-  	pp-java5-to-abox(extension)
-
+    s-enter(
+    | "strategoxt/syntax/java-front/lib/java/pretty-print.str"
+    , "pp-java-box"
+    , "38"
+    , "2"
+    , "39"
+    , "29"
+    )
+    ; s-step(
+      | "strategoxt/syntax/java-front/lib/java/pretty-print.str"
+      , "39"
+      , "3"
+      , "39"
+      , "29"
+      )
+    ; pp-java5-to-abox(
+        s-step(
+        | "strategoxt/syntax/java-front/lib/java/pretty-print.str"
+        , "39"
+        , "20"
+        , "39"
+        , "28"
+        )
+        ; extension
+      )
+    < s-exit(
+      | "strategoxt/syntax/java-front/lib/java/pretty-print.str"
+      , "pp-java-box"
+      , "38"
+      , "2"
+      , "39"
+      , "29"
+      )
+    + s-exit(
+      | "strategoxt/syntax/java-front/lib/java/pretty-print.str"
+      , "pp-java-box"
+      , "38"
+      , "2"
+      , "39"
+      , "29"
+      )
+      ; fail
